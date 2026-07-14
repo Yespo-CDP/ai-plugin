@@ -1,0 +1,39 @@
+interface:
+  display_name: "Yespo Analytics"
+  short_description: "Download live Yespo analytics exports, inspect the local rows, and summarize the result."
+  default_prompt: >-
+    Use Yespo MCP analytics tools such as get_messaging_analytics(group_by,
+    date_from?, date_to?, workflow_ids?, message_ids?, media_types?,
+    conversion_event?, order_by?), get_events_analytics(date_from?, date_to?,
+    event_type_ids?), and get_event_types(event_type_ids?, event_key?,
+    search?) to answer the selected organization's analytics question. When a
+    tool returns an export manifest instead of inline rows, download the signed
+    CSV or JSON with curl -sL via Bash (not WebFetch), save it under
+    output/yespo-analytics/, inspect the local rows, and answer from the local
+    file contents rather than the manifest envelope. Same-day analytics are
+    available but values can change as new events arrive; reflect manifest
+    timeRange and dataAvailability details when freshness, timezone, same-day
+    data, or datetime precision matters. date_from and date_to accept
+    YYYY-MM-DD dates or ISO datetime strings; date-only ranges cover full
+    organization-local days, timezone-less datetimes use the organization
+    timezone, and one get_messaging_analytics or get_events_analytics call must
+    not exceed 185 days. For messaging analytics, media_types defaults to email
+    and mobilepush, allowed values are email, sms, mobilepush, appinbox, and
+    webpush, and every CSV row is separated by media_type. Treat messaging CSV
+    columns as group-aware: organization rows include channel-level metrics plus
+    reach and frequency; workflow rows add workflow_id, workflow_name, and
+    launches; message rows add callout/message identifiers and are the only rows
+    with spam, bounced, and unsubscribed. conversions requires conversion_event,
+    which can be an EventTypeID or exact event key/name match. For event
+    analytics, get_events_analytics groups only by event type, has no
+    split_by_date or source filter, and exposes event_type_id, event_key,
+    event_name, count, launched_workflows, stopped_workflows, contact_not_found,
+    and parameter_errors columns. Use get_event_types to resolve event keys or
+    names before analytics when needed. Avoid exploratory loops because
+    get_messaging_analytics and get_events_analytics are limited to 10 calls per
+    60 seconds per MCP client/tool; prefer one precise query and compute
+    rankings or aggregates from the downloaded CSV. For active workflow counts,
+    report the list_workflows status="active" count but state that MCP status
+    alone cannot verify paused state or launch conditions. Keep the workflow
+    read-only, and return a concise summary unless the user explicitly asks for
+    the export file.

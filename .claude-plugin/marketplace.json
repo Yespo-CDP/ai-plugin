@@ -1,0 +1,21 @@
+{
+  "name": "yespo-plugins",
+  "owner": {
+    "name": "Yespo",
+    "email": "dev@yespo.io"
+  },
+  "metadata": {
+    "description": "Yespo skills and tools for Claude Code",
+    "version": "0.3.0"
+  },
+  "plugins": [
+    {
+      "name": "yespo",
+      "source": "./",
+      "description": "Yespo email editor, deliverability audits, messaging analytics, and MCP integration",
+      "version": "0.3.0",
+      "category": "marketing",
+      "tags": ["yespo", "email", "marketing", "deliverability", "analytics"]
+    }
+  ]
+}
