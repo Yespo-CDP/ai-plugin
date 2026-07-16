@@ -1,6 +1,6 @@
 # Yespo AI Plugin
 
-Yespo bundles reusable AI-agent workflows for Yespo email editing, email deliverability audits, and messaging analytics.
+Yespo bundles reusable AI-agent workflows for Yespo and eSputnik email editing, email deliverability audits, and messaging analytics. Yespo and eSputnik are the same underlying platform serving different markets, so this plugin ships two separate MCP server connections — one per brand/account — that you can use independently or side by side.
 
 The repository now supports both:
 
@@ -63,26 +63,28 @@ The Codex plugin manifest lives at:
 .codex-plugin/plugin.json
 ```
 
-## Authenticate with Yespo
+## Authenticate
 
-After installation, authenticate with the Yespo MCP server:
+This plugin declares two independent MCP servers in `.mcp.json` — `yespo` (`https://mcp.yespo.io`) and `esputnik` (`https://mcp.esputnik.com`). They are separate OAuth-protected resources with their own authorization servers, so authenticating with one does not grant access to the other. Connect whichever one (or both) match the account(s) you use:
 
-- Claude Code: open `/mcp`, select `yespo`, and complete the OAuth flow.
-- Codex: enable the plugin and complete the MCP authentication prompt on install or first use.
+- Claude Code: open `/mcp`, select `yespo` and/or `esputnik`, and complete the OAuth flow for each.
+- Codex: enable the plugin and complete the MCP authentication prompt for each server on install or first use.
+
+When a task is ambiguous about which account it targets, confirm with the user whether to use the `yespo` or `esputnik` MCP server before calling tools.
 
 ## Included Workflows
 
 ### `yespo-email-editor`
 
-Read, clone, and update Yespo email templates through the Yespo MCP server while preserving the original builder HTML and CSS structure. Supports validated text and button copy edits, full translation/localization with per-language CSS and Unicode preservation, and replacement of existing images through Yespo image upload sessions.
+Read, clone, and update Yespo or eSputnik email templates through the matching MCP server while preserving the original builder HTML and CSS structure. Supports validated text and button copy edits, full translation/localization with per-language CSS and Unicode preservation, and replacement of existing images through image upload sessions.
 
 ### `email-deliverability`
 
-Audit the technical email deliverability setup of a Yespo organization: combine `get_email_deliverability_setup` MCP data with local MXToolbox-like public checks for SPF, DKIM, DMARC, MX, domain resolution, and short-link SSL, then produce Markdown and JSON audit reports.
+Audit the technical email deliverability setup of a Yespo or eSputnik organization: combine `get_email_deliverability_setup` MCP data with local MXToolbox-like public checks for SPF, DKIM, DMARC, MX, domain resolution, and short-link SSL, then produce Markdown and JSON audit reports.
 
 ### `yespo-analytics`
 
-Answer messaging and event analytics questions from live Yespo MCP exports: query `get_messaging_analytics`, `get_events_analytics`, and `get_event_types`, download the signed CSV/JSON exports, and compute rankings and rates from the local rows.
+Answer messaging and event analytics questions from live Yespo or eSputnik MCP exports: query `get_messaging_analytics`, `get_events_analytics`, and `get_event_types`, download the signed CSV/JSON exports, and compute rankings and rates from the local rows.
 
 ## References
 

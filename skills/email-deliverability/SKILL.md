@@ -12,6 +12,10 @@ Use this skill for read-only technical setup audits of Yespo email deliverabilit
 
 Do not use MXToolbox as a third-party service in this version. Do not call Yespo mutation tools.
 
+## Account Selection
+
+This repo declares two independent MCP servers: `yespo` (`https://mcp.yespo.io`) and `esputnik` (`https://mcp.esputnik.com`). They are separate OAuth-authenticated accounts on the same underlying platform, not interchangeable. If it is not clear which account the user means, ask before calling any tool rather than guessing or mixing data from both.
+
 ## Requirements
 
 The audit helper needs the `dnspython` package for DNS checks. If it exits with a `dnspython is required` error, install it first (for example `pip3 install dnspython`) and re-run the helper.

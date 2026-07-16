@@ -14,6 +14,10 @@ This skill is read-only. Query Yespo through MCP, download export artifacts with
 
 Default to a summary-only answer. Only return or attach exported files if the user explicitly asks for them.
 
+## Account Selection
+
+This repo declares two independent MCP servers: `yespo` (`https://mcp.yespo.io`) and `esputnik` (`https://mcp.esputnik.com`). They are separate OAuth-authenticated accounts on the same underlying platform, not interchangeable. If it is not clear which account the user means, ask before calling any tool rather than guessing or mixing data from both.
+
 ## Workflow
 
 1. Identify the analytics question and choose the smallest Yespo MCP query that answers it.

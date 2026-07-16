@@ -3,6 +3,10 @@
     "yespo": {
       "type": "http",
       "url": "https://mcp.yespo.io"
+    },
+    "esputnik": {
+      "type": "http",
+      "url": "https://mcp.esputnik.com"
     }
   }
 }

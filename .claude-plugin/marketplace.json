@@ -15,7 +15,7 @@
       "description": "Yespo email editor, deliverability audits, messaging analytics, and MCP integration",
       "version": "0.3.0",
       "category": "marketing",
-      "tags": ["yespo", "email", "marketing", "deliverability", "analytics"]
+      "tags": ["yespo", "esputnik", "email", "marketing", "deliverability", "analytics"]
     }
   ]
 }

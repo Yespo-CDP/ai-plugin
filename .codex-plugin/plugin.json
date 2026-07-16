@@ -10,7 +10,7 @@
   "homepage": "https://github.com/Yespo-CDP/ai-plugin",
   "repository": "https://github.com/Yespo-CDP/ai-plugin",
   "license": "UNLICENSED",
-  "keywords": ["yespo", "email", "marketing", "mcp"],
+  "keywords": ["yespo", "esputnik", "email", "marketing", "mcp"],
   "skills": "./skills/",
   "mcpServers": "./.mcp.json",
   "interface": {
