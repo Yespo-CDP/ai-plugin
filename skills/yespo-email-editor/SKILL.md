@@ -15,6 +15,12 @@ Use explicit `read`, `clone`, and `update` modes:
 
 This skill is for narrowly scoped copy edits, translation/localization, and existing-image replacement inside an existing Yespo template. Keep the original verbose Yespo builder HTML. Do not rewrite the email as a new simplified document.
 
+## Account Selection
+
+Despite the `yespo` naming used throughout this skill (skill name, folder path, output paths, script names, and generic wording like "Yespo MCP" or "Yespo email"), this workflow applies identically to eSputnik. Yespo and eSputnik are the same underlying platform serving different markets; which brand/account a given message belongs to depends solely on which MCP server is used for the tool calls, not on this skill's naming.
+
+This repo declares two independent MCP servers: `yespo` (`https://mcp.yespo.io`) and `esputnik` (`https://mcp.esputnik.com`). They are separate OAuth-authenticated accounts, not interchangeable. If it is not clear which account a message ID belongs to, ask before calling any tool rather than guessing.
+
 ## Workflow
 
 1. `read`: call the MCP tool `get_email_message_export(message_id=<ID>)` to fetch the source message export manifest by ID.
