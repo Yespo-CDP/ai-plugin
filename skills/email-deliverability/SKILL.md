@@ -14,7 +14,9 @@ Do not use MXToolbox as a third-party service in this version. Do not call Yespo
 
 ## Account Selection
 
-This repo declares two independent MCP servers: `yespo` (`https://mcp.yespo.io`) and `esputnik` (`https://mcp.esputnik.com`). They are separate OAuth-authenticated accounts on the same underlying platform, not interchangeable. If it is not clear which account the user means, ask before calling any tool rather than guessing or mixing data from both.
+Despite the `Yespo` naming used throughout this skill (generic wording like "Yespo MCP" or "Yespo email deliverability"), this workflow applies identically to eSputnik. Yespo and eSputnik are the same underlying platform serving different markets; which brand/account a given audit targets depends solely on which MCP server is used for the tool calls, not on this skill's naming.
+
+This repo declares two independent MCP servers: `yespo` (`https://mcp.yespo.io`) and `esputnik` (`https://mcp.esputnik.com`). They are separate OAuth-authenticated accounts, not interchangeable. If it is not clear which account the user means, ask before calling any tool rather than guessing or mixing data from both.
 
 ## Requirements
 

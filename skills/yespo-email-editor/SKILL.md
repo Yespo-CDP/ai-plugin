@@ -17,7 +17,9 @@ This skill is for narrowly scoped copy edits, translation/localization, and exis
 
 ## Account Selection
 
-This repo declares two independent MCP servers: `yespo` (`https://mcp.yespo.io`) and `esputnik` (`https://mcp.esputnik.com`). They are separate OAuth-authenticated accounts on the same underlying platform, not interchangeable. If it is not clear which account a message ID belongs to, ask before calling any tool rather than guessing.
+Despite the `yespo` naming used throughout this skill (skill name, folder path, output paths, script names, and generic wording like "Yespo MCP" or "Yespo email"), this workflow applies identically to eSputnik. Yespo and eSputnik are the same underlying platform serving different markets; which brand/account a given message belongs to depends solely on which MCP server is used for the tool calls, not on this skill's naming.
+
+This repo declares two independent MCP servers: `yespo` (`https://mcp.yespo.io`) and `esputnik` (`https://mcp.esputnik.com`). They are separate OAuth-authenticated accounts, not interchangeable. If it is not clear which account a message ID belongs to, ask before calling any tool rather than guessing.
 
 ## Workflow
 

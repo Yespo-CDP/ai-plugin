@@ -2,6 +2,8 @@
 
 Yespo bundles reusable AI-agent workflows for Yespo and eSputnik email editing, email deliverability audits, and messaging analytics. Yespo and eSputnik are the same underlying platform serving different markets, so this plugin ships two separate MCP server connections — one per brand/account — that you can use independently or side by side.
 
+> **Note on naming:** the plugin, skills, folders, and scripts are named after Yespo for historical reasons, but every workflow here applies identically to eSputnik. Which brand/account a given operation targets depends solely on which MCP server (`yespo` or `esputnik`) is used for the tool calls — not on the `yespo`-branded names in this repo.
+
 The repository now supports both:
 
 - Claude Code plugins via Anthropic's `.claude-plugin` format
