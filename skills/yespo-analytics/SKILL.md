@@ -23,7 +23,7 @@ This repo declares two independent MCP servers: `yespo` (`https://mcp.yespo.io`)
 ## Workflow
 
 1. Identify the analytics question and choose the smallest Yespo MCP query that answers it.
-   - Use `get_messaging_analytics(group_by, date_from?, date_to?, workflow_ids?, message_ids?, media_types?, conversion_event?, order_by?)` for send, delivery, open, click, bounce, spam, unsubscribe, revenue, channel, media-type, or conversion metrics.
+   - Use `get_messaging_analytics(group_by, date_from?, date_to?, workflow_ids?, message_ids?, media_types?, conversion_event?, order_by?)` for send, delivery, open, click, bounce, spam, unsubscribe, orders, revenue (order amount), channel, or media-type metrics.
    - Use `get_events_analytics(date_from?, date_to?, event_type_ids?)` for event-count denominators or event-volume breakdowns.
    - Use `get_event_types(event_type_ids?, event_key?, search?)` first when the user provides an event name/key and you need to resolve the exact event type identifier before running analytics.
 2. Call the relevant MCP tool with the selected organization only.
@@ -63,8 +63,8 @@ This repo declares two independent MCP servers: `yespo` (`https://mcp.yespo.io`)
 - `workflow` rows add `workflow_id`, `workflow_name`, and `launches`.
 - `message` rows add `workflow_id`, `workflow_name`, `callout_id`, `callout_name`, `message_id`, and `message_subject`.
 - `spam`, `bounced`, and `unsubscribed` are message-level only.
-- `conversions` is present only when `conversion_event` is supplied. `conversion_event` can be an integer `EventTypeID` or an exact case-insensitive event key/name match.
-- `order_by` may use `sent`, `delivered`, `opened`, or `clicked` for all groups. `spam`, `bounced`, and `unsubscribed` are valid only for `group_by="message"`. `conversions` requires `conversion_event`.
+- For Yespo and eSputnik, messaging analytics report ecommerce orders: an `orders` column (order count) and `revenue` (total order amount) are always present, on every group. There is no event `conversions` column, and the `conversion_event` argument does not apply — it is ignored, and `filters.conversionEvent` is reported as `null`.
+- `order_by` may use `sent`, `delivered`, `opened`, `clicked`, or `orders` for all groups. `spam`, `bounced`, and `unsubscribed` are valid only for `group_by="message"`.
 - The finest available grouping level is callout/message. Recipient-domain, mailbox-provider, ISP, bounce-reason, recipient-level delivery errors, raw logs, and date-bucket splits are not available from this MCP analytics tool.
 
 ## Event Analytics Behavior
