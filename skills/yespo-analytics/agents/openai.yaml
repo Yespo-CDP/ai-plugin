@@ -23,8 +23,11 @@ interface:
     columns as group-aware: organization rows include channel-level metrics plus
     reach and frequency; workflow rows add workflow_id, workflow_name, and
     launches; message rows add callout/message identifiers and are the only rows
-    with spam, bounced, and unsubscribed. conversions requires conversion_event,
-    which can be an EventTypeID or exact event key/name match. For event
+    with spam, bounced, and unsubscribed. For Yespo and eSputnik, messaging
+    analytics report ecommerce orders: an orders column (order count) and revenue
+    (order amount) are always present on every group instead of event conversions,
+    order_by may also use orders, and the conversion_event argument does not apply
+    (it is ignored, filters.conversionEvent is null). For event
     analytics, get_events_analytics groups only by event type, has no
     split_by_date or source filter, and exposes event_type_id, event_key,
     event_name, count, launched_workflows, stopped_workflows, contact_not_found,
