@@ -1,6 +1,6 @@
 {
   "name": "yespo",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Yespo's AI agent. Less clicking, more doing.",
   "author": {
     "name": "Yespo",
@@ -10,7 +10,7 @@
   "homepage": "https://github.com/Yespo-CDP/ai-plugin",
   "repository": "https://github.com/Yespo-CDP/ai-plugin",
   "license": "UNLICENSED",
-  "keywords": ["yespo", "esputnik", "email", "marketing", "mcp"],
+  "keywords": ["yespo", "esputnik", "email", "marketing", "mcp", "mobile", "ios", "android", "sdk"],
   "skills": "./skills/",
   "mcpServers": "./.mcp.json",
   "interface": {
@@ -27,7 +27,9 @@
       "Use Yespo to read or update an existing Yespo email message by ID.",
       "Use eSputnik to read or update an existing eSputnik email message by ID.",
       "Use Yespo to audit my organization's email deliverability technical setup.",
-      "Use Yespo to summarize messaging performance for the last 7 days."
+      "Use Yespo to summarize messaging performance for the last 7 days.",
+      "Use Yespo to integrate or verify the Reteno Mobile SDK in this native iOS or Android project.",
+      "Use eSputnik to integrate or verify the Reteno Mobile SDK in this native iOS or Android project."
     ],
     "brandColor": "#0B266B",
     "composerIcon": "./assets/icon.png",

@@ -1,8 +1,8 @@
 # Yespo AI Plugin
 
-Yespo bundles reusable AI-agent workflows for Yespo and eSputnik email editing, email deliverability audits, and messaging analytics. Yespo and eSputnik are the same underlying platform serving different markets, so this plugin ships two separate MCP server connections — one per brand/account — that you can use independently or side by side.
+Yespo bundles reusable AI-agent workflows for native mobile SDK integration, Yespo and eSputnik email editing, email deliverability audits, and messaging analytics. Yespo and eSputnik are the same underlying platform serving different markets, so this plugin ships two separate MCP server connections — one per brand/account — that you can use independently or side by side.
 
-> **Note on naming:** the plugin, skills, folders, and scripts are named after Yespo for historical reasons, but every workflow here applies identically to eSputnik. Which brand/account a given operation targets depends solely on which MCP server (`yespo` or `esputnik`) is used for the tool calls — not on the `yespo`-branded names in this repo.
+> **Note on naming:** the plugin, skills, folders, and scripts are named after Yespo for historical reasons, but every workflow here applies to eSputnik too. MCP-backed operations target the independently authorized `yespo` or `esputnik` connection. The mobile workflow retains technical names such as `Reteno`, `com.reteno:fcm`, and `reteno-local-storage` because both branded services use that SDK.
 
 The repository now supports both:
 
@@ -45,34 +45,42 @@ Skills are namespaced as:
 - `/yespo:yespo-email-editor`
 - `/yespo:email-deliverability`
 - `/yespo:yespo-analytics`
+- `/yespo:mobile-sdk-integration`
 
 ## Codex
 
-Codex currently supports plugin installation through a marketplace file. This repo includes a repo-scoped marketplace at `.agents/plugins/marketplace.json`, and that marketplace points to the repository root plugin.
+Add the marketplace:
 
-To test this repo as a Codex plugin:
-
-1. Open the repo in Codex.
-2. Restart Codex so it picks up `.agents/plugins/marketplace.json`.
-3. Open the plugin directory and select the repo marketplace.
-4. Install or enable `Yespo`.
-
-For a personal local marketplace on a new machine, use `yespo-plugins` as the marketplace name and `Yespo Plugins` as the marketplace display name.
-
-The Codex plugin manifest lives at:
-
-```text
-.codex-plugin/plugin.json
+```bash
+codex plugin marketplace add Yespo-CDP/ai-plugin --ref main
 ```
+
+Install the plugin:
+
+```bash
+codex plugin add yespo@yespo-plugins
+```
+
+No release tag exists yet. After the first versioned release is published, replace `main` with that tag using `--ref <tag>` when you need a pinned version.
+
+For local development, open this repository in Codex and enable `Yespo` from the repo marketplace in `.agents/plugins/marketplace.json`.
+
+The Codex plugin manifest lives at `.codex-plugin/plugin.json`.
+
+## Project-local Skill
+
+To use only the mobile integration workflow without the full plugin, copy or symlink `skills/mobile-sdk-integration` into the target repository as `.agents/skills/mobile-sdk-integration`. Commit that copy only when the project wants to pin and review the instructions with its source.
 
 ## Authenticate
 
-This plugin declares two independent MCP servers in `.mcp.json` — `yespo` (`https://mcp.yespo.io`) and `esputnik` (`https://mcp.esputnik.com`). They are separate OAuth-protected resources with their own authorization servers, so authenticating with one does not grant access to the other. Connect whichever one (or both) match the account(s) you use:
+This plugin declares two independent MCP servers in `.mcp.json` — `yespo` (`https://mcp.yespo.io`) and `esputnik` (`https://mcp.esputnik.com`). They are separate OAuth-protected resources with their own authorization servers, so authenticating with one does not grant access to the other. The email, deliverability, analytics, and optional live mobile-validation workflows use these connections. Connect whichever one (or both) match the account(s) you use:
 
 - Claude Code: open `/mcp`, select `yespo` and/or `esputnik`, and complete the OAuth flow for each.
-- Codex: enable the plugin and complete the MCP authentication prompt for each server on install or first use.
+- Codex: enable the plugin and complete the MCP authentication prompt when a workflow first needs each server.
 
 When a task is ambiguous about which account it targets, confirm with the user whether to use the `yespo` or `esputnik` MCP server before calling tools.
+
+`mobile-sdk-integration` can inspect, implement, and compile a native SDK integration without MCP. It uses the selected connection only when it is available, authorized, and the user requests server-side validation. A test push is never sent without explicit approval.
 
 ## Included Workflows
 
@@ -88,7 +96,13 @@ Audit the technical email deliverability setup of a Yespo or eSputnik organizati
 
 Answer messaging and event analytics questions from live Yespo or eSputnik MCP exports: query `get_messaging_analytics`, `get_events_analytics`, and `get_event_types`, download the signed CSV/JSON exports, and compute rankings and rates from the local rows.
 
+### `mobile-sdk-integration`
+
+Inspect an existing native Swift iOS or Kotlin/Java Android project, establish its Yespo/eSputnik context, targets, dependency manager, push provider, and partial Reteno setup, then apply the smallest compatible SDK integration. The workflow preserves existing lifecycle and notification behavior, keeps access keys out of git, runs repository-native verification, and reports code, runtime, and optional service-side validation separately.
+
 ## References
 
 - [Anthropic Claude Code plugins](https://code.claude.com/docs/en/plugins)
-- [OpenAI Codex Build plugins](https://developers.openai.com/codex/plugins/build)
+- [OpenAI Codex plugins](https://developers.openai.com/plugins/build/plugins)
+- [OpenAI Agent Skills](https://developers.openai.com/plugins/build/skills)
+- [Mobile SDK integration release checklist](docs/mobile-sdk-integration-release-checklist.md)
