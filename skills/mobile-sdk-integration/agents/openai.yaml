@@ -1,0 +1,4 @@
+interface:
+  display_name: "Yespo / eSputnik Mobile SDK"
+  short_description: "Integrate Yespo or eSputnik mobile SDKs"
+  default_prompt: "Use $mobile-sdk-integration to integrate or verify the Reteno Mobile SDK for this native Yespo or eSputnik app."
