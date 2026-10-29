@@ -12,7 +12,7 @@
     {
       "name": "yespo",
       "source": "./",
-      "description": "Yespo and eSputnik email editor, deliverability audits, messaging analytics, and MCP integration",
+      "description": "Yespo and eSputnik read-only email inspection, deliverability audits, messaging analytics, and MCP integration",
       "version": "0.3.0",
       "category": "marketing",
       "tags": ["yespo", "esputnik", "email", "marketing", "deliverability", "analytics"]

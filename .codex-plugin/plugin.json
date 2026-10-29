@@ -24,8 +24,8 @@
     "privacyPolicyURL": "https://yespo.io/privacy-policy",
     "termsOfServiceURL": "https://yespo.io/terms-of-use",
     "defaultPrompt": [
-      "Use Yespo to read or update an existing Yespo email message by ID.",
-      "Use eSputnik to read or update an existing eSputnik email message by ID.",
+      "Use Yespo to inspect an existing Yespo email message by ID.",
+      "Use eSputnik to inspect an existing eSputnik email message by ID.",
       "Use Yespo to audit my organization's email deliverability technical setup.",
       "Use Yespo to summarize messaging performance for the last 7 days."
     ],

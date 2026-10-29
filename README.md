@@ -1,6 +1,6 @@
 # Yespo AI Plugin
 
-Yespo bundles reusable AI-agent workflows for Yespo and eSputnik email editing, email deliverability audits, and messaging analytics. Yespo and eSputnik are the same underlying platform serving different markets, so this plugin ships two separate MCP server connections — one per brand/account — that you can use independently or side by side.
+Yespo bundles reusable AI-agent workflows for Yespo and eSputnik read-only email inspection, email deliverability audits, and messaging analytics. Yespo and eSputnik are the same underlying platform serving different markets, so this plugin ships two separate MCP server connections — one per brand/account — that you can use independently or side by side.
 
 > **Note on naming:** the plugin, skills, folders, and scripts are named after Yespo for historical reasons, but every workflow here applies identically to eSputnik. Which brand/account a given operation targets depends solely on which MCP server (`yespo` or `esputnik`) is used for the tool calls — not on the `yespo`-branded names in this repo.
 
@@ -78,7 +78,9 @@ When a task is ambiguous about which account it targets, confirm with the user w
 
 ### `yespo-email-editor`
 
-Read, clone, and update Yespo or eSputnik email templates through the matching MCP server while preserving the original builder HTML and CSS structure. Supports validated text and button copy edits, full translation/localization with per-language CSS and Unicode preservation, and replacement of existing images through image upload sessions.
+Inspect saved Yespo/eSputnik email exports, metadata and previews without modifying them. The legacy skill identifier is retained for compatibility. JSON/HTML/CSS editing, cloning, translation writes and image/module replacement are excluded. For an edit request, provide proposed copy or a change brief for manual application in the native editor.
+
+MCP must enforce the same boundary for discovery and direct calls. Updating this plugin does not itself revoke server access, and existing installations keep their cached skill until refreshed.
 
 ### `email-deliverability`
 
