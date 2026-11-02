@@ -381,15 +381,15 @@ def check_short_link_tls(hostname: str, tls_checker: HttpsTlsChecker) -> dict[st
 
 
 def check_bimi(domain: str, resolver: DnsResolver) -> dict[str, Any]:
-    return _optional_txt_check("bimi", "BIMI record", f"default._bimi.{domain}", resolver)
+    return _optional_txt_check("bimi", "BIMI record", f"default._bimi.{domain}", resolver, "BIMI1")
 
 
 def check_mta_sts(domain: str, resolver: DnsResolver) -> dict[str, Any]:
-    return _optional_txt_check("mta_sts", "MTA-STS record", f"_mta-sts.{domain}", resolver)
+    return _optional_txt_check("mta_sts", "MTA-STS record", f"_mta-sts.{domain}", resolver, "STSv1")
 
 
 def check_tls_rpt(domain: str, resolver: DnsResolver) -> dict[str, Any]:
-    return _optional_txt_check("tls_rpt", "TLS-RPT record", f"_smtp._tls.{domain}", resolver)
+    return _optional_txt_check("tls_rpt", "TLS-RPT record", f"_smtp._tls.{domain}", resolver, "TLSRPTv1")
 
 
 def check_sender_setup(sender_payload: dict[str, Any], verified_domains: list[str]) -> list[dict[str, Any]]:
@@ -442,7 +442,7 @@ def check_sender_setup(sender_payload: dict[str, Any], verified_domains: list[st
             _check("sender.configured_domains", "Configured sender domains", CHECK_SKIPPED, "sender", "No configured sender domain list was provided.")
         )
 
-    interfaces = _as_list(public_interface) if not isinstance(public_interface, dict) else [public_interface]
+    interfaces = _as_list(public_interface.get("items")) if isinstance(public_interface, dict) and "items" in public_interface else _as_list(public_interface)
     unavailable = [
         {"email": item.get("email"), "status": item.get("status"), "statusReason": item.get("statusReason")}
         for item in interfaces
@@ -459,6 +459,8 @@ def check_sender_setup(sender_payload: dict[str, Any], verified_domains: list[st
                 details={"unavailable": unavailable},
             )
         )
+    elif any(not isinstance(item, dict) or item.get("status") != "AVAILABLE" for item in interfaces):
+        checks.append(_check("sender.public_interface", "Sender interfaces", CHECK_WARN, "sender", "Some sender interface statuses are missing or unreadable."))
     elif interfaces:
         checks.append(_check("sender.public_interface", "Sender interfaces", CHECK_PASS, "sender", "Sender interfaces are available."))
     else:
@@ -590,11 +592,11 @@ def write_artifacts(report: dict[str, Any], *, output_dir: Path) -> tuple[Path, 
 
 def _check_domain_configuration(domain_payload: dict[str, Any]) -> dict[str, Any]:
     domain = _normalize_domain(domain_payload.get("domain"))
-    configuration = _as_dict(domain_payload.get("configuration"))
+    configuration = _as_dict(domain_payload.get("status")) or _as_dict(domain_payload.get("configuration"))
     if not configuration:
         return _check("mcp.domain_configuration", "Domain configuration", CHECK_SKIPPED, domain, "No domain configuration was provided by MCP.")
-    status = _find_first_key(configuration, {"status"})
-    verification_passed = _find_first_key(configuration, {"verificationPassed", "verified"})
+    status = configuration.get("status")
+    verification_passed = configuration.get("verificationPassed", configuration.get("verified"))
     details = {"status": status, "verificationPassed": verification_passed, "configuration": configuration}
     if status in {"CONFIGURED", "VERIFIED"} or verification_passed is True:
         return _check("mcp.domain_configuration", "Domain configuration", CHECK_PASS, domain, "Yespo domain configuration is verified/configured.", details=details)
@@ -635,15 +637,17 @@ def _check_warmup_info(domain_payload: dict[str, Any]) -> dict[str, Any]:
     return _check("mcp.warmup_info", "Warmup info", CHECK_INFO, domain, "Warmup info was returned by MCP.", details={"warmupInfo": warmup})
 
 
-def _optional_txt_check(check_id: str, title: str, name: str, resolver: DnsResolver) -> dict[str, Any]:
+def _optional_txt_check(check_id: str, title: str, name: str, resolver: DnsResolver, version: str) -> dict[str, Any]:
     lookup = _lookup(resolver, name, "TXT")
     details: dict[str, Any] = {"name": name, "records": lookup.records}
     if lookup.error:
         details["dnsError"] = lookup.error
         return _inconclusive_check(check_id, title, name, details)
     domain = name.split(".", 1)[1] if "." in name else name
+    if any(_parse_tag_record(record).get("v") == version for record in lookup.records):
+        return _check(check_id, title, CHECK_INFO, domain, f"{title} with the expected version tag was found; full policy validity was not checked.", details=details)
     if lookup.records:
-        return _check(check_id, title, CHECK_INFO, domain, f"{title} was found.", details=details)
+        return _check(check_id, title, CHECK_WARN, domain, f"TXT records were found, but none identify a {title} with v={version}.", details=details)
     return _check(check_id, title, CHECK_SKIPPED, domain, f"{title} was not found.", details=details)
 
 

@@ -51,7 +51,7 @@ The audit helper expects `get_email_deliverability_setup` to return:
     {
       "id": 123,
       "domain": "example.com",
-      "configuration": {},
+      "status": {"status": "IN_PROGRESS", "dnsRecordVerificationResults": [], "configurationIssues": []},
       "verificationHistory": {},
       "warmupInfo": {},
       "errors": []
@@ -60,7 +60,7 @@ The audit helper expects `get_email_deliverability_setup` to return:
   "sender": {
     "mailingConfiguration": {},
     "sendingDomains": [],
-    "publicInterface": {}
+    "publicInterface": {"items": [{"status": "AVAILABLE"}]}
   },
   "shortLinks": {
     "sslDomains": [],
@@ -74,6 +74,8 @@ The audit helper expects `get_email_deliverability_setup` to return:
 ```
 
 The `oneClickUnsubscribe` field is retained for MCP compatibility only. Do not turn it into a technical setup finding or recommendation.
+
+The helper also accepts the older `domain.configuration` shape and a direct sender object/list. Optional BIMI, MTA-STS and TLS-RPT checks identify version-matching TXT records only; they do not validate the full policy, fetch policy files or verify certificates.
 
 ## Audit Coverage
 
