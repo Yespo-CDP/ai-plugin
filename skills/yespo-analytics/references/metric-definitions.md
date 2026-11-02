@@ -46,7 +46,7 @@ Cancellation writes negative offsets of positive attribution rows whose binding 
 
 Primary-order ingestion can fill a missing currency from organization revenue settings; reported currency is stored source evidence, not proof of currency conversion. Native performance resolves currency through cached binding-type settings, with absent/blank currency allowing an unfiltered sum. Keep the existing unknown/mixed-currency guard and never infer the currency of an old cached amount from today's settings alone.
 
-These facts are pinned to `esputnik-orders-list` `f4727e9`, `esputnik-orders` `cdffbc6`, `esputnik-orders-processor` `a281748`, `esputnik-callout-progress` `3b2244d`, `esputnik-callout-reports` `5d1aa0f`, and `esng` `d1f7237`; exact source paths are recorded in the release provenance. They do not resolve same-order-period contribution or custom BI parity.
+These facts are pinned to `esputnik-orders-list` `f4727e9`, `esputnik-orders` `cdffbc6`, `esputnik-orders-processor` `a281748`, `esputnik-callout-progress` `3b2244d`, `esputnik-callout-reports` `5d1aa0f`, and `esng` `d1f7237`. They do not resolve same-order-period contribution or custom BI parity.
 
 ## Campaign and recommendation measures
 

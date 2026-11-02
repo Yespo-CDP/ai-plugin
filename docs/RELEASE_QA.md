@@ -1,4 +1,4 @@
-# Yespo/eSputnik 0.5.0-dev.6 — draft release QA
+# Yespo/eSputnik 0.5.0-dev.7 — draft release QA
 
 This is the current release checklist. The PR is for review and testing; it does not authorize merge, marketplace publication or production rollout. Test the assembled artifact, not an unrestricted workspace copy. Gemini is excluded from this release. Exactly four skills are included: workflow-designer, segment-designer, yespo-analytics and email-deliverability. Email creation/editing and unrelated management skills are excluded; shared MCP behavior is unchanged.
 
@@ -7,11 +7,11 @@ This is the current release checklist. The PR is for review and testing; it does
 Use Python 3.9+ and Node.js (the existing SDK was tested with Node 24.12.0). Choose new physical output directories outside the checkout; their parents must exist. On macOS use `/private/tmp` rather than its `/tmp` symlink.
 
 ```sh
-python3 scripts/build_release.py build /private/tmp/yespo-qa-dev6
-python3 scripts/build_release.py verify /private/tmp/yespo-qa-dev6
+python3 scripts/build_release.py build /private/tmp/yespo-qa-dev7
+python3 scripts/build_release.py verify /private/tmp/yespo-qa-dev7
 ```
 
-Record the PR commit and SHA-256 of the resulting `release.json` with every test run. The reviewed dev.6 source produces 151 payload files plus `release.json`; its expected manifest SHA-256 is `8c191344db4b469fd775b2b99881eff1e328f055ba981ebb7123c174841d120c`. If it differs, investigate the changed payload and establish a new candidate identity before carrying forward acceptance.
+Record the PR commit and SHA-256 of the resulting `release.json` with every test run. The corrected dev.7 source produces 151 payload files plus `release.json`; its expected manifest SHA-256 is `11ad56dae187ac970752029f3a55d3edebfb621dde1acfc09f182e5c06609078`. If it differs, investigate the changed payload and establish a new candidate identity before carrying forward acceptance.
 
 Install that directory using the [public README](../README.md). Test with only the public candidate enabled, an ordinary authorized customer OAuth connection, and an explicitly disposable organization. Verify the actual organization identity before mutations. Do not copy credentials from private clients. No campaign sends, workflow activation, automation-triggering events or new production data are needed.
 
@@ -30,8 +30,8 @@ Current local result: **23 Python + 9 Node tests passed**. Coverage includes seg
 
 | Client / capability | Observed evidence | Limit |
 | --- | --- | --- |
-| Codex dev.6 | Exact assembled/installed inventory; four-skill discovery; four fresh conversational selection checks; live contact-summary retrieval and hash verification | New workflow/segment writes and external DNS probes were not repeated under dev.6 |
-| Earlier Codex candidates | Inactive workflow create/edit/read-back and restoration; segment create/edit/count and restoration; analytics pagination and native comparisons; deliverability probes | Applies to the versions/scenarios tested. Dev.6 skill/runtime bytes are unchanged from dev.5; do not describe old runs as new tests |
+| Earlier Codex dev.6 | Exact assembled/installed inventory; four-skill discovery; four fresh conversational selection checks; live contact-summary retrieval and hash verification | New workflow/segment writes and external DNS probes were not repeated under dev.6; dev.7 has not been installed for a fresh conversation |
+| Earlier Codex candidates | Inactive workflow create/edit/read-back and restoration; segment create/edit/count and restoration; analytics pagination and native comparisons; deliverability probes | Applies to the versions/scenarios tested. Dev.6 skill/runtime bytes were unchanged from dev.5. Dev.7 corrects the workflow connection name and removes an inaccurate analytics provenance claim; no runtime code changed. Do not describe old runs as new tests |
 | Forms new-contact reports | Both reports passed after deployed date-format fix #190, with verified exports | Empty/zero results do not certify populated metrics |
 | Revenue/order report ratios | Implemented and reviewed, with explicit message-start versus primary-order-date definitions | Exact same-order-period/custom-BI parity is not claimed |
 | Claude Code | Package/test path provided | Conversational acceptance was deferred; no verified compatibility claim |

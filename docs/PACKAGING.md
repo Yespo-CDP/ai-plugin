@@ -7,8 +7,8 @@ The repository is the maintainer source. Distribute an assembled directory, not 
 Use Python 3.9+; no build dependency installation or service access is required. Choose a new physical output directory outside the checkout whose parent exists:
 
 ```sh
-python3 scripts/build_release.py build /private/tmp/yespo-release-dev6
-python3 scripts/build_release.py verify /private/tmp/yespo-release-dev6
+python3 scripts/build_release.py build /private/tmp/yespo-release-dev7
+python3 scripts/build_release.py verify /private/tmp/yespo-release-dev7
 ```
 
 Existing destinations and symlink paths are rejected. The builder never cleans a directory or edits source. If an I/O failure leaves an incomplete destination, inspect it and choose a fresh path. `release.json` contains the source version and SHA-256 of every payload file, excluding itself. Verification checks exact membership, hashes, provenance, marketplace/version agreement, four skills, local README links and segment SDK dependencies. Hashes establish integrity, not trusted origin or live acceptance.

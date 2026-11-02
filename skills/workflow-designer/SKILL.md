@@ -5,7 +5,7 @@ description: Inspect, create inactive drafts, and edit Yespo or eSputnik workflo
 
 # Workflow designer
 
-Use the installed client's selected Yespo/Reteno MCP connection. Authentication and organization binding belong to that connection. Never ask for API keys, copy credentials, switch product endpoints, or invoke publisher infrastructure. No local browser, external designer agent, or service URL is required.
+Use the installed client's selected Yespo/eSputnik MCP connection. Authentication and organization binding belong to that connection. Never ask for API keys, copy credentials, switch product endpoints, or invoke publisher infrastructure. No local browser, external designer agent, or service URL is required.
 
 ## Capability check
 
