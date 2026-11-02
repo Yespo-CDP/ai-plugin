@@ -1,0 +1,456 @@
+{
+  "agent_commit": "d6dbbc3fdbe3159f7526e7613dec1253d54b6632",
+  "mcp_commit": "dd596c7128cb1a97e0c42118439811d9231200eb",
+  "files": [
+    {
+      "path": "references/client/SDK_API_REFERENCE.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/SDK_API_REFERENCE.md",
+      "sha256": "11448785c1549ea48616d299ebec8a2faca5b657686e8d928e71b293cb1e3366"
+    },
+    {
+      "path": "references/client/catalogs/blocks/AddContactToGroup.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/AddContactToGroup.md",
+      "sha256": "68da2d07e3a9460d26b7193f63395dbbdde2e2b6893400168c3e6dfdab676517"
+    },
+    {
+      "path": "references/client/catalogs/blocks/AlternateSend.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/AlternateSend.md",
+      "sha256": "cf73cf2e28c5b09a0fd312cfb7a2b57dd2eb7dd1dfff1f14143de8810878902e"
+    },
+    {
+      "path": "references/client/catalogs/blocks/Branch.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/Branch.md",
+      "sha256": "835491e61c49001be0e74ef54c6f2226198ffc15d1c7ce8d81d0792e7b295d3a"
+    },
+    {
+      "path": "references/client/catalogs/blocks/CheckConfirmedTask.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/CheckConfirmedTask.md",
+      "sha256": "47c86ef62055612ff9a207b0420b418f4ec187af184289e2ba16ec9bf9b9a72c"
+    },
+    {
+      "path": "references/client/catalogs/blocks/CheckContactCheckboxTask.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/CheckContactCheckboxTask.md",
+      "sha256": "6b72f7b5200f79a1601dc3d84a4777b557007ef7feaa5b7035e80be34180d304"
+    },
+    {
+      "path": "references/client/catalogs/blocks/CheckContactFieldsTask.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/CheckContactFieldsTask.md",
+      "sha256": "0c1f4be0a18cffde6e2f8b152cdc31033cc6a945afec6c84ca5a71adf9cb6918"
+    },
+    {
+      "path": "references/client/catalogs/blocks/CheckDateTimeTask.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/CheckDateTimeTask.md",
+      "sha256": "dcc93d4ed68b6c645f31ad6cbb1b2f4564ac9b9a64bef993318a882c6b57d5f5"
+    },
+    {
+      "path": "references/client/catalogs/blocks/CheckEventTask.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/CheckEventTask.md",
+      "sha256": "d8ff80385dc0bea388c8e0d2349a571c5b6c85220a33410deb49b8f7b788e700"
+    },
+    {
+      "path": "references/client/catalogs/blocks/CheckInGroup.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/CheckInGroup.md",
+      "sha256": "7a35c1a667cba69d0cb251f2d7fbf5246eb78b9a5d90f361b9e21d8eea96b5e8"
+    },
+    {
+      "path": "references/client/catalogs/blocks/CheckPoint.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/CheckPoint.md",
+      "sha256": "82274889049cc7c68179e282cf66e042b318a4b6dd5b98dc99626e383aefabf8"
+    },
+    {
+      "path": "references/client/catalogs/blocks/Clock.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/Clock.md",
+      "sha256": "6b872ce9a2b9e376909931a3b5da0d955a236ab08b536fc663ba213c8ac4a8b5"
+    },
+    {
+      "path": "references/client/catalogs/blocks/ContactExistsTask.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/ContactExistsTask.md",
+      "sha256": "1fe45cc6b0d627638d1d058373aae270ad725c341b3c47693720db8662f398da"
+    },
+    {
+      "path": "references/client/catalogs/blocks/CreateContactTask.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/CreateContactTask.md",
+      "sha256": "0e793177f4212d5be1b01ffb1054c630833fc886512427693bd8ad6540af11a5"
+    },
+    {
+      "path": "references/client/catalogs/blocks/CurrentTime.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/CurrentTime.md",
+      "sha256": "544b31eb7ac6a181ff67062ba629467d5fa63c80715dfc76dfa9a91c9e63a6ed"
+    },
+    {
+      "path": "references/client/catalogs/blocks/DateTimer.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/DateTimer.md",
+      "sha256": "d44be82f45e9af0b92d6a5f5a9061e532fb38b05ce5ef48ab34226615f6857ac"
+    },
+    {
+      "path": "references/client/catalogs/blocks/DeleteContactFromGroup.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/DeleteContactFromGroup.md",
+      "sha256": "ff30b3b47f012858e46cf6dbee5366af5bd85c0b79c6c6b8353109999ae86773"
+    },
+    {
+      "path": "references/client/catalogs/blocks/DeleteContactTask.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/DeleteContactTask.md",
+      "sha256": "cab71c01739450c41842caf71f4dc1cde8c664a288ef0dfec5a7c15625ede275"
+    },
+    {
+      "path": "references/client/catalogs/blocks/DeliveredMessage.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/DeliveredMessage.md",
+      "sha256": "79089b1023aebf834c0fdae9cae2ecfb1968eabf5ff6b5c6d8818abf7b1cca77"
+    },
+    {
+      "path": "references/client/catalogs/blocks/End.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/End.md",
+      "sha256": "429f39f55509cf7f72f6eb1206706e7c3e0b7a8d9ef343ded0bbcd4d294f0d4f"
+    },
+    {
+      "path": "references/client/catalogs/blocks/FindContactTask.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/FindContactTask.md",
+      "sha256": "3f0a4ddefedfd30c145de3dcaf1417dd49359deeecbb14e2491b03c49ebd076c"
+    },
+    {
+      "path": "references/client/catalogs/blocks/GenPromocodeTask.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/GenPromocodeTask.md",
+      "sha256": "01aa7e2569e81c977a6a761ac8cadaa99d3ab7cd365f27da0961fcc9c807840d"
+    },
+    {
+      "path": "references/client/catalogs/blocks/GetOrderTask.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/GetOrderTask.md",
+      "sha256": "4145e7e1725450b89425e52e0db0d0c0aebff7eb811fb5acf79951ca3a4977bb"
+    },
+    {
+      "path": "references/client/catalogs/blocks/GetPromocodeExtTask.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/GetPromocodeExtTask.md",
+      "sha256": "abe6ddc02b9d75cbea26dd99c30999477edbc33d8b3674bef8314c99a818c00e"
+    },
+    {
+      "path": "references/client/catalogs/blocks/GetPromocodeTask.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/GetPromocodeTask.md",
+      "sha256": "f4c15999969440d084afa9445735ba85684dfd680c2b01e9f4533d7babb30204"
+    },
+    {
+      "path": "references/client/catalogs/blocks/IsSent.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/IsSent.md",
+      "sha256": "8de51588fb800dd58a800f2bac96917bc83f5208669f9d3abd65df43852d74e9"
+    },
+    {
+      "path": "references/client/catalogs/blocks/OpenEmailLink.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/OpenEmailLink.md",
+      "sha256": "914631f6e9b0e470df75514319503556a992449d492cbc43e1bbc32a87a5fb10"
+    },
+    {
+      "path": "references/client/catalogs/blocks/PercentageRouter.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/PercentageRouter.md",
+      "sha256": "b6aa70049bcbe84ed811a56ddd6a4cb845a19f4f224d95d2ad1d5b2f4903d324"
+    },
+    {
+      "path": "references/client/catalogs/blocks/ReadEmail.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/ReadEmail.md",
+      "sha256": "e96ccb4529b5fc017a03f2c76ed093ac79ce3581237a22d09c2fb2a7c0227dd4"
+    },
+    {
+      "path": "references/client/catalogs/blocks/RegisterEventTask.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/RegisterEventTask.md",
+      "sha256": "5d01ffa6d2ab946bc98f358040d4c488df6cf2880eea46870ba32bc9d79a1d78"
+    },
+    {
+      "path": "references/client/catalogs/blocks/SegmentationTask.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/SegmentationTask.md",
+      "sha256": "1d2f2259b08bdbf4957836bacb1b74724ca1784b559e42ca24618b7d3b3684ee"
+    },
+    {
+      "path": "references/client/catalogs/blocks/SendAppInbox.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/SendAppInbox.md",
+      "sha256": "71669ca87869a05595ca4f46c59f29ce6ff0df1d906b5e1c23452a57ae4d9647"
+    },
+    {
+      "path": "references/client/catalogs/blocks/SendEmail.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/SendEmail.md",
+      "sha256": "7ef1195295deffa735a705998b7545de26edd6a5c5e401f44835919714459969"
+    },
+    {
+      "path": "references/client/catalogs/blocks/SendMobilePush.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/SendMobilePush.md",
+      "sha256": "bb38fec618b95f8f01294f761d3e45e6209fc799af8e147b5a91c91dd73deab4"
+    },
+    {
+      "path": "references/client/catalogs/blocks/SendPush.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/SendPush.md",
+      "sha256": "511f9dd3fa567b712196a85fc5b03689728d09f57d04ee0f8be1bf07463388f0"
+    },
+    {
+      "path": "references/client/catalogs/blocks/SendSMS.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/SendSMS.md",
+      "sha256": "c60c3d83d77829ed7c42a4d11fa0e8e1f0ebc9bc277597f38d4443a051a48804"
+    },
+    {
+      "path": "references/client/catalogs/blocks/SendTelegramBot.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/SendTelegramBot.md",
+      "sha256": "553817f286e881392a8c00342372768298ba860d4335a1ecbcd66951f4cbb961"
+    },
+    {
+      "path": "references/client/catalogs/blocks/SendViber.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/SendViber.md",
+      "sha256": "80320083f0f1064a76845401cac955d546726285612b8cf6c3323ee6e1e6b4a4"
+    },
+    {
+      "path": "references/client/catalogs/blocks/Start.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/Start.md",
+      "sha256": "652dd10859b8ee3a99e14b9752acf714dfac8ed2ff7e058aaabd5c8cb4515d6d"
+    },
+    {
+      "path": "references/client/catalogs/blocks/SubscribeContactTask.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/SubscribeContactTask.md",
+      "sha256": "61b49a577182a3e1cd953eeb51fb266d15b74783555b2e3a3fadabc22462261d"
+    },
+    {
+      "path": "references/client/catalogs/blocks/TransactionalSmsMessageTask.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/TransactionalSmsMessageTask.md",
+      "sha256": "11b7a8400c2dbda48a61a823afbd090c21acdecdb92425428109dae75db3aade"
+    },
+    {
+      "path": "references/client/catalogs/blocks/TransactionalViberMessageTask.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/TransactionalViberMessageTask.md",
+      "sha256": "b9c5e654da09626359ba7ea2cb9222f9ddf83f582bb1b415b8224b12a4805839"
+    },
+    {
+      "path": "references/client/catalogs/blocks/UnconfirmedPreparedMessageTask.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/UnconfirmedPreparedMessageTask.md",
+      "sha256": "d3d55790f576824f132955e096b33b24b10177f54aadf69ea0d45efee616993f"
+    },
+    {
+      "path": "references/client/catalogs/blocks/UpdateContactTask.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/UpdateContactTask.md",
+      "sha256": "eb3ea50d5e2075f51516c455543820deace0cf4bf651a84290afcc1f4a526104"
+    },
+    {
+      "path": "references/client/catalogs/blocks/UpdateCustomFields.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/UpdateCustomFields.md",
+      "sha256": "2acff7fe7b28e4cbcace3331e3cf6ad9de5ec6afa62f16acdc94909745c751b4"
+    },
+    {
+      "path": "references/client/catalogs/blocks/UpdateLinkMKTask.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/UpdateLinkMKTask.md",
+      "sha256": "7dcfe7beb52d9d1e996cab3ae8f38bbdcfda99b36596c79e3be0a19a068d1882"
+    },
+    {
+      "path": "references/client/catalogs/blocks/VariableMatchesTask.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/VariableMatchesTask.md",
+      "sha256": "c7487d83a18039ccec83c30a38f4b7061f7009dbf8e4cd891e66910723a87313"
+    },
+    {
+      "path": "references/client/catalogs/blocks/WebhookTask.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/blocks/WebhookTask.md",
+      "sha256": "dbbcdd0d6458133d338fb479704fca157f74f801ae78e0a351d52fd56a4ce30c"
+    },
+    {
+      "path": "references/client/catalogs/configs/WorkflowStartConfiguration.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/configs/WorkflowStartConfiguration.md",
+      "sha256": "801eebff5a471e4d3bb13969548bfcee59f4214218bb44207759168d9dd1c601"
+    },
+    {
+      "path": "references/client/catalogs/configs/WorkflowStopConfiguration.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/client/catalogs/configs/WorkflowStopConfiguration.md",
+      "sha256": "17290d107d158fdeb827fdfecd39606f5bbdf89fb8b8229cb62330596f26d520"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/AbCart_email.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/AbCart_email.md",
+      "sha256": "6d1f5e333a45b52c2c213204af86ca80fc43d156a8ccd88709a7663fd2550f85"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/AbCart_omnichannel.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/AbCart_omnichannel.md",
+      "sha256": "e91e0d43ca6253dd1bd29975c6eabeeab059e728953f9eb1ab19af91bbf24f2f"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/AbCategory_email.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/AbCategory_email.md",
+      "sha256": "875a4d38f004ba2f8ecee7de15bf3ca38b3c16b460c5a5ec3486dfba5356da51"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/AbCategory_omnichannel.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/AbCategory_omnichannel.md",
+      "sha256": "cedc177846e99ebf4012895bb52745d2e332976f1b0acea5195260af2de58fc8"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/AbSearch_email.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/AbSearch_email.md",
+      "sha256": "66829c31c6c8584c193a615fb1c6068c7d30bf7e15e2a97898684aa301253b82"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/AbSearch_omnichannel.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/AbSearch_omnichannel.md",
+      "sha256": "0fd011ce9d18b89ef62bbc6e24c27f366fb7e34644217158d868c8bca3b38487"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/AbView_email.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/AbView_email.md",
+      "sha256": "dd3ceb2fedde27f4155f0ab588eaeb7b2ffb468a716d70858d437b2dfe31a13f"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/AbView_omnichannel.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/AbView_omnichannel.md",
+      "sha256": "38c8b5904d1d1da96ea7be1bcd2ddba5cee16b4b271e764d4e4e4f91353b34fd"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/BackInStockWishlist_email.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/BackInStockWishlist_email.md",
+      "sha256": "837eec58e8d8a2c733532b49ec4e8651b993312ed07b1fa4127895fc50ed367f"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/BackInStockWishlist_omnichannel.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/BackInStockWishlist_omnichannel.md",
+      "sha256": "8ab07edf725c6f031364f71723fbe768e64532a470d494e5be65784e53672325"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/BackInStock_email.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/BackInStock_email.md",
+      "sha256": "fd6476afc5861028dc24146ca42fc8a3e9ddffe74b5bc34bdf3deef48e982070"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/BackInStock_omnichannel.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/BackInStock_omnichannel.md",
+      "sha256": "08a7ddff4c51bfa8351bc1e156c8c1d6d7fef5f0c83bf10c0bc338638ffc63d2"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/Discounts_email.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/Discounts_email.md",
+      "sha256": "3e24533da90f18c9bca872c579845d9c957ec7ee780c6596a09b9835b0e0936e"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/Discounts_omnichannel.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/Discounts_omnichannel.md",
+      "sha256": "c9884a6553cff759deb9222ffee07081ed50fedf91a5165afcdeee222fafa2f6"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/InactiveUserReactivation_email.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/InactiveUserReactivation_email.md",
+      "sha256": "be224958da1f7377ebb64da21fba1676655343d84ea83e5a37d6a10f5286366d"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/InactiveUserReactivation_omnichannel.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/InactiveUserReactivation_omnichannel.md",
+      "sha256": "62642884daecf20fce77074e297242ffe41cf53850792374c5bd4001669b3013"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/NewArrivals_email.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/NewArrivals_email.md",
+      "sha256": "1bf03b567bdab0331c9c3e3abdf305f4cbe928d84e4bfd49130b69666b6c4c42"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/NewArrivals_omnichannel.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/NewArrivals_omnichannel.md",
+      "sha256": "13fe5bedb5010595881e449278c0661040de7fb44daf2a9964395c6801028160"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/NextBestOffer_email.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/NextBestOffer_email.md",
+      "sha256": "bbe4b9e6024eba10975edfe8d0fe6159ec0a7cc1f72746712975d0613dfe2543"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/NextBestOffer_omnichannel.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/NextBestOffer_omnichannel.md",
+      "sha256": "e36724ae7971311283d14c39a6bca04e9e83603602139fe6a8d0a333e52090c5"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/OutOfStockWishlist_email.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/OutOfStockWishlist_email.md",
+      "sha256": "3859b6d921ab7f051df60051d9b02d3c75db519bdf8839f403513e722e1c0072"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/OutOfStockWishlist_omnichannel.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/OutOfStockWishlist_omnichannel.md",
+      "sha256": "748aec72919f41ff1b04758099682a8b0e9cab1bc1e9d84e6fa531f57626240a"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/OutOfStock_email.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/OutOfStock_email.md",
+      "sha256": "861720cc7f5edfac867155f61fbac4bc0896b267b655f702fbfc4e2130148dda"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/OutOfStock_omnichannel.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/OutOfStock_omnichannel.md",
+      "sha256": "47d0752be6f8ca012747e19fcd9c3c1f574b4733e60f1a47367b430192a3f7ea"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/ReducedPriceCart_email.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/ReducedPriceCart_email.md",
+      "sha256": "5a37f765c1721aaba944c4dab69ec375cff4f55d9982488b88a0a103dd824b53"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/ReducedPriceCart_omnichannel.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/ReducedPriceCart_omnichannel.md",
+      "sha256": "6e6993a373fa3666bb024eb44c823ea75fed5e17479cf2fe3c20e43a1a828d47"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/ReducedPriceSimilarCart_email.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/ReducedPriceSimilarCart_email.md",
+      "sha256": "2a51b03b8b3322e4ae40ed259c5ccb3abb6e5da6a31a2fbca217ed6a8467d895"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/ReducedPriceSimilarCart_omnichannel.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/ReducedPriceSimilarCart_omnichannel.md",
+      "sha256": "9eee818092524c6ebccac7a88e0cb44f66bafaf5173858e935625e757f9ecfef"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/ReducedPriceSimilarView_email.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/ReducedPriceSimilarView_email.md",
+      "sha256": "95811d5c00f243fffa14b1ea3e76d21c227fd5334a715c3cfefaa61a2210ec57"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/ReducedPriceSimilarView_omnichannel.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/ReducedPriceSimilarView_omnichannel.md",
+      "sha256": "3d5ed1f6db6677577327aaddb14fa92cabc1c7100104108a0538b1c7bc713274"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/ReducedPriceSimilarWishlist_email.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/ReducedPriceSimilarWishlist_email.md",
+      "sha256": "81b01f53e7c33752d635eb3a6d305f5af38b7018ca6793c2599b78b381a98de5"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/ReducedPriceSimilarWishlist_omnichannel.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/ReducedPriceSimilarWishlist_omnichannel.md",
+      "sha256": "07edcd79c42433dbfe25bcc1faddf0ca8c1903c057fa4456f61ef2f54068d9d7"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/ReducedPriceView_email.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/ReducedPriceView_email.md",
+      "sha256": "d8442c4d435d7b5c261ac9201742ee2f44d122c71e3c956cc88bd7bed14767fb"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/ReducedPriceView_omnichannel.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/ReducedPriceView_omnichannel.md",
+      "sha256": "e41c6f991d1b214a0e201d96c04c6e46e1b1fd21c1529adcfc141426d6419c00"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/ReducedPriceWishlist_email.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/ReducedPriceWishlist_email.md",
+      "sha256": "acffb2abea59534580422b52c6757550b37f10b27765b157859c7ca43367fd5b"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/ReducedPriceWishlist_omnichannel.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/ReducedPriceWishlist_omnichannel.md",
+      "sha256": "a966e385d310bd918233b54fe396d9f36fcdab3c8ab7bc7a3821493358d83ad2"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/RegularDemand_email.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/RegularDemand_email.md",
+      "sha256": "57de0c158e32ed7eb2a8c9bb96e8017ca40ef85bb255d9f35abf810096019d53"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/RegularDemand_omnichannel.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/RegularDemand_omnichannel.md",
+      "sha256": "9fd059eb4a8703bb2bf7ce57a2e7107a25fafc9618b37a49293ea311c3de163b"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/ReminderWishlist_email.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/ReminderWishlist_email.md",
+      "sha256": "b476eaa59dcec9ba4458909a38318dffbf7db517b762a294d4e7c8adcc65ff6a"
+    },
+    {
+      "path": "references/prompts/catalogs/triggers/ReminderWishlist_omnichannel.md",
+      "source_path": "src/reteno_agent/skills/workflow-designer/references/prompts/catalogs/triggers/ReminderWishlist_omnichannel.md",
+      "sha256": "faa52b623e8a93b5707125377d355346eb9a26aab8efd4fa8c7cbed8d4c2bfb4"
+    }
+  ]
+}

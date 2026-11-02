@@ -1,0 +1,813 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://reteno.com/schemas/segment-designer/segment-output.schema.json",
+  "title": "Reteno Dynamic Segment Output",
+  "description": "Stable JSON structure accepted as a dynamic segment schema. Column IDs, field types, operators, option values, support flags, and autocomplete values must be selected from the live segment definitions.",
+  "$comment": "Derived from ardas/esputnik-segment-condition master commit d7a7656a467f726c8d9d46f06eaa9dc1693041c4. This schema intentionally describes output structure only. It does not duplicate the live definition catalog.",
+  "type": "object",
+  "properties": {
+    "include": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/schemaItem"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "exclude": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/schemaItem"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "sort": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/sort"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "parameters": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/parameter"
+      },
+      "default": []
+    }
+  },
+  "anyOf": [
+    {
+      "required": [
+        "include"
+      ],
+      "properties": {
+        "include": {
+          "$ref": "#/$defs/schemaItem"
+        }
+      }
+    },
+    {
+      "required": [
+        "exclude"
+      ],
+      "properties": {
+        "exclude": {
+          "$ref": "#/$defs/schemaItem"
+        }
+      }
+    }
+  ],
+  "additionalProperties": true,
+  "examples": [
+    {
+      "include": {
+        "relation": "AND",
+        "negation": null,
+        "segments": [
+          {
+            "filter": {
+              "relation": "AND",
+              "negation": false,
+              "conditions": [
+                {
+                  "column": {
+                    "columnId": "EMAIL",
+                    "type": "EMAIL",
+                    "profileInputId": null
+                  },
+                  "index": 0,
+                  "value": "@example.com",
+                  "operator": "CONTAINS",
+                  "negation": false,
+                  "isValid": true
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "exclude": null,
+      "parameters": []
+    }
+  ],
+  "$defs": {
+    "relation": {
+      "type": "string",
+      "enum": [
+        "AND",
+        "OR"
+      ]
+    },
+    "definitionString": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Copy the exact value from the matching live definition."
+    },
+    "valueAtom": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "additionalProperties": true
+        }
+      ]
+    },
+    "conditionValue": {
+      "description": "Its concrete shape is selected from operators[].type in the matching live definition. VOID operators may omit value.",
+      "anyOf": [
+        {
+          "$ref": "#/$defs/valueAtom"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/valueAtom"
+          }
+        }
+      ]
+    },
+    "columnIdentifier": {
+      "type": "object",
+      "properties": {
+        "columnId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "description": "Copy definition.columnId. It is null for profile-input definitions."
+        },
+        "type": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/definitionString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Copy definition.type."
+        },
+        "profileInputId": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1,
+          "description": "Copy definition.profileInputMetadata.profileInputId for a custom profile field; otherwise use null or omit it."
+        }
+      },
+      "anyOf": [
+        {
+          "required": [
+            "columnId"
+          ],
+          "properties": {
+            "columnId": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "required": [
+            "profileInputId"
+          ],
+          "properties": {
+            "profileInputId": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "simpleCondition": {
+      "type": "object",
+      "required": [
+        "column",
+        "operator"
+      ],
+      "properties": {
+        "column": {
+          "$ref": "#/$defs/columnIdentifier"
+        },
+        "index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "value": {
+          "$ref": "#/$defs/conditionValue"
+        },
+        "label": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "operator": {
+          "$ref": "#/$defs/definitionString",
+          "description": "Copy operators[].name from the selected definition where operators[].isSupported is true."
+        },
+        "originOperator": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/definitionString"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "negation": {
+          "type": "boolean",
+          "default": false
+        },
+        "isValid": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "rule": {
+      "type": "object",
+      "required": [
+        "function",
+        "operator"
+      ],
+      "properties": {
+        "function": {
+          "$ref": "#/$defs/definitionString"
+        },
+        "operator": {
+          "$ref": "#/$defs/definitionString"
+        },
+        "originOperator": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/definitionString"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "negation": {
+          "type": "boolean",
+          "default": false
+        },
+        "value": {
+          "$ref": "#/$defs/conditionValue"
+        },
+        "system": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "aggregateHolder": {
+      "type": "object",
+      "required": [
+        "collection"
+      ],
+      "properties": {
+        "collection": {
+          "type": "string",
+          "enum": [
+            "CUSTOMER_DATA",
+            "SC_EVENTS",
+            "PUSH_SUBSCRIPTIONS",
+            "EVENTS",
+            "ACTIVITY",
+            "TOKEN_SUBSCRIPTIONS",
+            "CUSTOMER_LIFECYCLE"
+          ]
+        },
+        "negation": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": false
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/simpleCondition"
+          },
+          "default": []
+        },
+        "rule": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/rule"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "collection": {
+                "const": "SC_EVENTS"
+              }
+            },
+            "required": [
+              "collection"
+            ]
+          },
+          "then": {
+            "required": [
+              "conditions"
+            ],
+            "properties": {
+              "conditions": {
+                "allOf": [
+                  {
+                    "contains": {
+                      "$ref": "#/$defs/scEventNameCondition"
+                    }
+                  },
+                  {
+                    "contains": {
+                      "$ref": "#/$defs/scEventDateCondition"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "collection": {
+                "const": "PUSH_SUBSCRIPTIONS"
+              }
+            },
+            "required": [
+              "collection"
+            ]
+          },
+          "then": {
+            "required": [
+              "conditions"
+            ],
+            "properties": {
+              "conditions": {
+                "contains": {
+                  "$ref": "#/$defs/pushApplicationCondition"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "collection": {
+                "const": "EVENTS"
+              }
+            },
+            "required": [
+              "collection"
+            ]
+          },
+          "then": {
+            "required": [
+              "conditions"
+            ],
+            "properties": {
+              "conditions": {
+                "allOf": [
+                  {
+                    "contains": {
+                      "$ref": "#/$defs/eventTypeCondition"
+                    }
+                  },
+                  {
+                    "contains": {
+                      "$ref": "#/$defs/eventCountCondition"
+                    },
+                    "minContains": 0,
+                    "maxContains": 1
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "collection": {
+                "const": "TOKEN_SUBSCRIPTIONS"
+              }
+            },
+            "required": [
+              "collection"
+            ]
+          },
+          "then": {
+            "required": [
+              "conditions"
+            ],
+            "properties": {
+              "conditions": {
+                "contains": {
+                  "$ref": "#/$defs/tokenApplicationCondition"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "aggregateCondition": {
+      "type": "object",
+      "required": [
+        "aggregate"
+      ],
+      "properties": {
+        "aggregate": {
+          "$ref": "#/$defs/aggregateHolder"
+        }
+      },
+      "additionalProperties": true
+    },
+    "filterConditionHolder": {
+      "type": "object",
+      "required": [
+        "relation"
+      ],
+      "properties": {
+        "filterCompositeName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "relation": {
+          "$ref": "#/$defs/relation"
+        },
+        "negation": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/condition"
+          },
+          "default": []
+        }
+      },
+      "additionalProperties": false
+    },
+    "filterCondition": {
+      "type": "object",
+      "required": [
+        "filter"
+      ],
+      "properties": {
+        "filter": {
+          "$ref": "#/$defs/filterConditionHolder"
+        }
+      },
+      "additionalProperties": true
+    },
+    "condition": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/simpleCondition"
+        },
+        {
+          "$ref": "#/$defs/aggregateCondition"
+        },
+        {
+          "$ref": "#/$defs/filterCondition"
+        }
+      ]
+    },
+    "schemaFilter": {
+      "type": "object",
+      "required": [
+        "relation"
+      ],
+      "properties": {
+        "relation": {
+          "$ref": "#/$defs/relation"
+        },
+        "negation": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/condition"
+          },
+          "default": []
+        }
+      },
+      "additionalProperties": true
+    },
+    "schemaSegment": {
+      "type": "object",
+      "properties": {
+        "relation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/relation"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/schemaFilter"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "segments": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/schemaSegment"
+          }
+        }
+      },
+      "anyOf": [
+        {
+          "required": [
+            "filter"
+          ],
+          "properties": {
+            "filter": {
+              "$ref": "#/$defs/schemaFilter"
+            }
+          }
+        },
+        {
+          "required": [
+            "segments"
+          ],
+          "properties": {
+            "segments": {
+              "type": "array"
+            }
+          }
+        }
+      ],
+      "additionalProperties": true
+    },
+    "schemaItem": {
+      "type": "object",
+      "required": [
+        "relation"
+      ],
+      "properties": {
+        "relation": {
+          "$ref": "#/$defs/relation"
+        },
+        "negation": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "segments": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/schemaSegment"
+          },
+          "default": []
+        },
+        "custom": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": true
+    },
+    "sort": {
+      "type": "object",
+      "required": [
+        "column",
+        "ascending"
+      ],
+      "properties": {
+        "column": {
+          "type": "object",
+          "required": [
+            "columnId"
+          ],
+          "properties": {
+            "columnId": {
+              "type": "string",
+              "enum": [
+                "CONTACT_ID",
+                "CREATED_DATE",
+                "UPDATED_DATE",
+                "FIRSTNAME",
+                "LASTNAME",
+                "SOURCE",
+                "EMAIL_RATING"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "ascending": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "parameter": {
+      "type": "object",
+      "required": [
+        "name",
+        "type"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "columnIdCondition": {
+      "type": "object",
+      "required": [
+        "column"
+      ],
+      "properties": {
+        "column": {
+          "type": "object",
+          "required": [
+            "columnId"
+          ],
+          "properties": {
+            "columnId": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "scEventNameCondition": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/columnIdCondition"
+        },
+        {
+          "properties": {
+            "column": {
+              "properties": {
+                "columnId": {
+                  "const": "SC_EVENT_NAME"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "scEventDateCondition": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/columnIdCondition"
+        },
+        {
+          "properties": {
+            "column": {
+              "properties": {
+                "columnId": {
+                  "const": "SC_EVENT_DATE"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "pushApplicationCondition": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/columnIdCondition"
+        },
+        {
+          "properties": {
+            "column": {
+              "properties": {
+                "columnId": {
+                  "const": "PUSH_APPLICATION_ID"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "eventTypeCondition": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/columnIdCondition"
+        },
+        {
+          "properties": {
+            "column": {
+              "properties": {
+                "columnId": {
+                  "const": "EVENT_TYPE_ID"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "eventCountCondition": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/columnIdCondition"
+        },
+        {
+          "properties": {
+            "column": {
+              "properties": {
+                "columnId": {
+                  "const": "EVENT_COUNT"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "tokenApplicationCondition": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/columnIdCondition"
+        },
+        {
+          "properties": {
+            "column": {
+              "properties": {
+                "columnId": {
+                  "const": "TOKEN_APPLICATION_ID"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

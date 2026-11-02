@@ -1,0 +1,242 @@
+<catalog_brief>
+name: UnconfirmedPreparedMessageTask
+ui_name: Send obligatory (transactional) email
+category: integration
+sdk_block_type: Custom
+functionality: sends a transactional email message.
+purpose: use it when the workflow must send one transactional email outside the standard message-send blocks.
+when_to_use: use it when the business action is specifically a transactional email task with task-specific parameters.
+</catalog_brief>
+
+<schema>
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "unconfirmedPreparedMessageTask block",
+  "description": "Exact task schema for `unconfirmedPreparedMessageTask` based on the editor converter and validators.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "taskName": {
+      "const": "unconfirmedPreparedMessageTask"
+    },
+    "taskParams": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "#/$defs/EmailAddressParam"
+          },
+          {
+            "$ref": "#/$defs/messageIdParam"
+          },
+          {
+            "$ref": "#/$defs/contactIdParam"
+          },
+          {
+            "$ref": "#/$defs/languageParamParam"
+          },
+          {
+            "$ref": "#/$defs/jsonParamParam"
+          }
+        ]
+      },
+      "allOf": [
+        {
+          "contains": {
+            "$ref": "#/$defs/EmailAddressParam"
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "$ref": "#/$defs/messageIdParam"
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "$ref": "#/$defs/contactIdParam"
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "$ref": "#/$defs/languageParamParam"
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "$ref": "#/$defs/jsonParamParam"
+          },
+          "maxContains": 1
+        }
+      ],
+      "minItems": 4,
+      "maxItems": 5
+    },
+    "blockDescription": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "taskName"
+  ],
+  "$defs": {
+    "EmailAddressParam": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "const": "EmailAddress"
+        },
+        "type": {
+          "const": "EmailAddress"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "email"
+            },
+            {
+              "type": "string",
+              "pattern": "^\\$\\{[^}]+\\}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "type",
+        "value"
+      ],
+      "description": "Always emitted."
+    },
+    "messageIdParam": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "const": "messageId"
+        },
+        "type": {
+          "const": "EmailMessageId"
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "name",
+        "type",
+        "value"
+      ],
+      "description": "Always emitted; validator requires a value."
+    },
+    "contactIdParam": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "const": "contactId"
+        },
+        "type": {
+          "const": "TestVariable"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^\\d+$"
+            },
+            {
+              "type": "string",
+              "pattern": "^\\$\\{[^}]+\\}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "type",
+        "value"
+      ],
+      "description": "Always emitted."
+    },
+    "languageParamParam": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "const": "languageParam"
+        },
+        "type": {
+          "const": "TestVariable"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "type",
+        "value"
+      ],
+      "description": "Always emitted."
+    },
+    "jsonParamParam": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "const": "jsonParam"
+        },
+        "type": {
+          "const": "TestVariable"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "string",
+              "pattern": "^\\$\\{[^}]+\\}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "type",
+        "value"
+      ],
+      "description": "Emitted only when `showJsonControl` is true."
+    }
+  }
+}
+</schema>
+
