@@ -57,7 +57,7 @@ Record what succeeded, what failed, what could not be tested and why, together w
 ## Open release decisions
 
 1. **Core plugin:** QA must approve this exact candidate and accepted evidence gaps. Populated In-App/recommendation coverage and historical conversion remain incomplete. The former saved-segment count mismatch was resolved by native recalculation; it is not an outstanding API bug. Forms valid-request failures are resolved. The independently handled Timer issue remains nonblocking.
-2. **Publication:** dev.6 is a development candidate, not a final release tag. After scope/QA approval, update release metadata consistently, rebuild, and verify/test the final artifact. No shared MCP deployment is needed merely to publish the existing Codex package.
+2. **Publication:** dev.7 is a development candidate, not a final release tag. After scope/QA approval, update release metadata consistently, rebuild, and verify/test the final artifact. No shared MCP deployment is needed merely to publish the existing Codex package.
 
 ## Review scope
 
