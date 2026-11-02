@@ -28,20 +28,6 @@ Select immutable upstream commits, inspect scoped changes and copy the required 
 
 See [RELEASE_QA.md](RELEASE_QA.md) for current candidate identity, test commands, evidence and release gates. For testing the assembled payload, use a separate scratch copy and overlay the maintainer tests/build script there; keep the original artifact untouched so exact membership verification remains meaningful.
 
-## Gemini targets
-
-Generate from the verified release rather than keeping another skill source:
-
-```sh
-python3 scripts/build_gemini_skills.py /private/tmp/yespo-release-dev6 /private/tmp/yespo-gemini-apps
-python3 scripts/build_gemini_skills.py /private/tmp/yespo-release-dev6 /private/tmp/yespo-gemini-enterprise --target enterprise
-python3 scripts/build_gemini_skills.py /private/tmp/yespo-release-dev6 /private/tmp/yespo-gemini-enterprise --target enterprise --verify
-```
-
-Use new physical directories outside both release and maintainer checkout. One ZIP contains one skill; expanded folders are review copies. Codex UI metadata is omitted. The consumer target relocates the segment SDK inside its skill and adjusts runner imports. Enterprise omits that unsupported JavaScript runtime and supplies inspection-only instructions. It adds the [administrator guide](gemini-enterprise/README.md), [action selection](gemini-enterprise/actions.json) and [acceptance checklist](gemini-enterprise/ACCEPTANCE.md).
-
-The Gemini manifest records target, source version/release hash, builder hash, archive and file hashes, origins and supporting-document hashes. Record the manifest's own SHA-256 with each handoff. Verification reconstructs bytes from the same release, builder and support documents, so retain the exact maintainer revision. Neither a valid ZIP nor a matching hash certifies host execution. The kits do not configure OAuth or grant permissions.
-
 ## Publication boundary
 
 Keep local customer exports, credentials, signed URLs, investigation logs and security reproductions outside the public PR and artifacts. A draft QA PR is not publication approval. Review and test the final source/version before merging or distributing an official release.
