@@ -2,7 +2,7 @@
 
 Use an AI assistant to audit email deliverability, analyze performance, prepare dynamic segments, and design workflows in Yespo or eSputnik. The plugin includes four skills and two independent account connections. Choose the connection for the account you want to work with; the Yespo name on a skill does not select the account.
 
-This is an unpublished **0.5.0-dev.7** candidate. Codex testing covers selected scenarios and does not certify every operation or account. Release approval and client acceptance are separate from package verification. Claude Code packaging is included, but its acceptance testing is deferred. Gemini support is deferred.
+This repository contains installable releases of the Yespo plugin. The current PR branch contains the unpublished **0.5.0-dev.8** candidate. Codex testing covers selected scenarios and does not certify every operation or account. Release approval and client acceptance are separate from package verification. Claude Code packaging is included, but its acceptance testing is deferred. Gemini support is deferred.
 
 ## Included skills
 
@@ -27,19 +27,27 @@ Keep the whole package together. In particular, `packages/segment-designer-sdk/`
 
 ## Install the candidate in Codex
 
-Start with the assembled release directory supplied for testing. Register its local marketplace using a Codex CLI that supports plugin marketplaces:
+For the draft candidate in [PR #5](https://github.com/Yespo-CDP/ai-plugin/pull/5), register the GitHub branch as a plugin marketplace:
 
 ```sh
-codex plugin marketplace add /absolute/path/to/yespo-release
+codex plugin marketplace add Yespo-CDP/ai-plugin --ref codex/yespo-release-qa
 ```
 
-Open the desktop app's Plugins Directory, select **Yespo Plugins**, and install **Yespo** from that local source. Refresh or restart the app if the source does not appear. Check that the installed version is `0.5.0-dev.7`, then start a new chat with this candidate enabled.
+Open the desktop app's Plugins Directory, select **Yespo Plugins**, and install **Yespo** from that source. Refresh or restart the app if the source does not appear. Check that the installed version is `0.5.0-dev.8`, then start a new chat with this candidate enabled.
 
-Local installations load a cached copy. After a candidate changes, refresh or reinstall it and check the installed version before testing. Availability varies by client; these steps follow the [official local packaging guidance](https://developers.openai.com/plugins/build/plugins).
+Installations load a cached copy. After a candidate changes, refresh or reinstall it and check the installed version before testing. Availability varies by client; these steps follow the [official plugin packaging guidance](https://developers.openai.com/plugins/build/plugins).
+
+Only after this release is approved and merged into the default branch, use the stable repository source:
+
+```sh
+codex plugin marketplace add Yespo-CDP/ai-plugin
+```
+
+Candidate test coverage and outstanding checks are tracked in the [PR checklist](https://github.com/Yespo-CDP/ai-plugin/pull/5#qa-checklist).
 
 ## Claude Code test path
 
-Claude Code acceptance for this candidate is deferred. To test the assembled directory locally:
+Claude Code acceptance for this candidate is deferred. To test a local checkout of the candidate branch or its identical assembled directory:
 
 ```sh
 claude --plugin-dir /absolute/path/to/yespo-release
@@ -64,4 +72,4 @@ The assistant prepares segment changes locally and makes authorized live calls t
 
 Testing covers selected accounts and scenarios, not every report or role. Populated In-App and recommendation metrics remain unverified. Historical seen/not-seen conversion depends on available channel data and confirmed calculation rules. Financial reports retain their native attribution scope; they do not establish same-order-period contribution. See the packaged [metric definitions](skills/yespo-analytics/references/metric-definitions.md) for interpretation guidance.
 
-The root manifests, marketplace files, `skills/`, `packages/`, assets and this README form the installable payload. `release.json` records its version and SHA-256 file inventory. Development notes, acceptance reports, tests and build scripts are maintained separately and are excluded from assembled releases.
+The root manifests, marketplace files, `skills/`, `packages/`, assets and this README form the installable payload. `release.json` records its version and SHA-256 file inventory. The public repository contains only this assembled output. Development notes, acceptance reports, tests and build scripts are maintained separately.
