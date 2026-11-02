@@ -1,0 +1,4 @@
+interface:
+  display_name: "Workflow Designer"
+  short_description: "Inspect and edit workflows with guarded MCP SDK calls"
+  default_prompt: "Use $workflow-designer to inspect or update a workflow in the selected connected organization."

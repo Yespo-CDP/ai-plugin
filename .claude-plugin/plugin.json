@@ -1,12 +1,21 @@
 {
   "name": "yespo",
-  "description": "Yespo and eSputnik email editor, deliverability audits, messaging analytics, and MCP integration for AI coding agents",
-  "version": "0.3.0",
+  "description": "Yespo and eSputnik workflows, dynamic segments, analytics and email deliverability audits",
+  "version": "0.5.0-dev.6",
   "author": {
     "name": "Yespo",
     "email": "dev@yespo.io"
   },
   "homepage": "https://github.com/Yespo-CDP/ai-plugin",
   "repository": "https://github.com/Yespo-CDP/ai-plugin",
-  "keywords": ["yespo", "esputnik", "email", "marketing", "deliverability", "analytics"]
+  "keywords": [
+    "yespo",
+    "esputnik",
+    "email",
+    "marketing",
+    "deliverability",
+    "analytics",
+    "segments",
+    "workflows"
+  ]
 }

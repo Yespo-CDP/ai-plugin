@@ -1,7 +1,8 @@
 ---
 name: email-deliverability
 description: Audit Yespo email deliverability technical setup by combining get_email_deliverability_setup MCP data with MXToolbox-like public DNS, host, and TLS checks. Use for SPF, DKIM, DMARC, sender setup, domain verification, tracking domain, short-link SSL, or technical setup audit requests.
-version: 0.1.0
+metadata:
+  version: "0.1.1"
 ---
 
 # Email Deliverability
@@ -26,10 +27,10 @@ The audit helper needs the `dnspython` package for DNS checks. If it exits with 
 
 1. Call Yespo MCP `get_email_deliverability_setup` for the selected organization.
 2. Save the MCP response under `output/email-deliverability/`, for example `setup_<orgId>_<UTC_TIMESTAMP>.json`.
-3. Run the audit helper:
+3. Resolve `scripts/audit_technical_setup.py` relative to this loaded `SKILL.md` file. Run that absolute path from the task workspace; do not assume the plugin root is the working directory or write output into its installed cache:
 
 ```bash
-python3 skills/email-deliverability/scripts/audit_technical_setup.py \
+python3 "/absolute/path/to/email-deliverability/scripts/audit_technical_setup.py" \
   --input <setup-json-path> \
   --output-dir output/email-deliverability
 ```
@@ -84,8 +85,8 @@ MCP-derived checks:
 
 Public checks:
 - SPF TXT existence, duplicate SPF records, basic termination, and estimated DNS lookup budget.
-- DMARC TXT existence and policy strength.
-- DKIM selector checks only when the MCP payload exposes selector or record names; otherwise DKIM is marked skipped.
+- DMARC TXT existence, policy and enforcement percentage.
+- DKIM selector checks for a nonempty public-key field in the terminal TXT record, following DNS aliases. This is not cryptographic key or message-signature validation. Check only selectors exposed by MCP; otherwise mark DKIM skipped.
 - MX records for sender and reply domains.
 - CNAME/A/AAAA resolution for technical domains and short-link domains.
 - HTTPS/TLS certificate check for short-link domains.
@@ -105,4 +106,4 @@ Use the Markdown for the human-facing answer and the JSON for detailed evidence.
 - Stay within the selected organization.
 - Never call Yespo create, update, delete, activate, deactivate, or verification-refresh endpoints.
 - Treat missing DKIM selector data as skipped, not as failed.
-- If DNS resolution fails, report the DNS error in the relevant check instead of guessing.
+- DNS/TLS transport errors are inconclusive, not evidence of missing records or invalid certificates. Include unresolved checks in the answer; an audit with inconclusive checks is not an all-clear.

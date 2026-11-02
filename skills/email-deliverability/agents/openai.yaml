@@ -1,14 +1,4 @@
 interface:
   display_name: "Email Deliverability"
-  short_description: "Audit Yespo email technical setup with MCP data plus public DNS, host, and TLS checks."
-  default_prompt: >-
-    Use the email-deliverability skill for Yespo email deliverability technical setup audits. Call Yespo MCP
-    get_email_deliverability_setup for the selected organization, save the response JSON under
-    output/email-deliverability/, then run python3
-    skills/email-deliverability/scripts/audit_technical_setup.py --input <setup-json-path>
-    --output-dir output/email-deliverability. Read the generated Markdown and JSON before answering.
-    The audit is read-only and replicates core MXToolbox-like checks locally through public DNS,
-    host resolution, and HTTPS/TLS checks; do not use MXToolbox as a third-party service and do not
-    call Yespo mutation endpoints. Summarize failing and warning checks first, include SPF, DKIM,
-    DMARC, sender alignment, short-link SSL, and technical domain resolution, and share generated
-    artifact paths only when the user explicitly asks for files.
+  short_description: "Audit Yespo/eSputnik email setup with DNS and TLS checks."
+  default_prompt: "Use $email-deliverability to audit my selected Yespo/eSputnik account's email setup without changing anything."
