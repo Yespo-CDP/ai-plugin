@@ -1,0 +1,13 @@
+# Workflow operating manual
+
+This client-oriented manual replaces the upstream publisher-runner orchestration. The adjacent SKILL.md governs transport, authorization, mutation lifecycle, verification, and recovery. Read the pinned [SDK reference](references/client/SDK_API_REFERENCE.md) for available globals and method signatures, and consult the exact entries in [the catalog index](references/CATALOG_INDEX.md) for block and configuration schemas. Do not interpret upstream references to `get_workflow_state` as a tool requirement: the current MCP read is `get_workflow_export` plus its graph artifact.
+
+For a new design, identify trigger, eligibility, channel, message references, delays, branch outcomes, re-entry rules, and stop conditions from the request. Resolve required organization assets before building. State a concise concrete plan; ask about unresolved business choices only. Trigger recipes supply optional defaults when the user selects that recipe. They do not override explicit user requirements, account availability, mutation safety, or the inactive default.
+
+For an edit, start from the exported graph and configuration, identify the smallest SDK change, and preserve every unrelated node, edge, and field. Do not normalize, simplify, remove unnamed merge points, change scheduling, or alter activation as an incidental cleanup. Use `updateShape` for parameters, `insertBetween` for inline additions, `connect` for existing shapes, and the reference's supported bypass operation only for a requested removal whose topology qualifies.
+
+The Start block already exists. Capture new shape IDs from SDK return values; locate existing ones from the actual graph or `sdk.findShapes`. Terminate each new path in End. Use `ShapeType` enum members. No imports, DOM, filesystem, timers, or network calls in SDK code. Set start configuration only from its catalog schema. Convert stop records through `WorkflowStopConfigurationAdapter.fromRecord` before `sdk.setStopConfiguration`. Do not clear configurations unless requested. End every mutating script with `sdk.finish()`.
+
+Before mutation, check that all resolved entity IDs belong to the selected organization and match the intended assets. Successful SDK validation alone does not establish that a referenced message, event, or audience exists. Incomplete drafts must remain inactive and be reported as incomplete.
+
+Run the create/export/update/export or export/update/export sequence in SKILL.md through the host's discovered MCP tools. No installed local runtime, standalone runner, environment credentials, publisher session, Slack identity, or browser bundle is required. There is no local substitute for remote SDK validation or live read-back.

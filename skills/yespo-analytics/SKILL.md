@@ -1,93 +1,89 @@
 ---
 name: yespo-analytics
-description: Read live Yespo messaging and events analytics exports through Yespo MCP, download and inspect the local CSV or JSON, and answer with a concise summary unless exports are explicitly requested. Use for campaign/messaging performance, open/click/delivery/conversion rates, channel performance, event counts, and event type lookups.
-version: 0.2.0
+description: Read Yespo/eSputnik messaging, contact-base summary/status/growth, forms and Web Widget campaigns, true InApp, WEB/MOBILE recommendations, account orders and event analytics through the selected OAuth MCP connection. Inspect downloaded CSV/JSON reports and preserve native metric definitions and completeness.
+metadata:
+  version: "0.3.1"
 ---
 
 # Yespo Analytics
 
-## Overview
+Read-only: query the selected Yespo/eSputnik OAuth MCP connection, inspect downloaded rows and metadata, and summarize. Share exports only when requested. Do not enable reporting features, change tracking, save segments, send messages or change settings to obtain analytics.
 
-Use this skill when the user asks for Yespo analytics such as campaign or messaging performance, workflow send rankings, open/click/delivery/conversion rates, channel or media-type performance, event counts, event type lookup, or conversion-share calculations that depend on Yespo MCP analytics exports.
+## Account and capabilities
 
-This skill is read-only. Query Yespo through MCP, download export artifacts with `curl`, inspect the local CSV or JSON files, and answer from local rows rather than the manifest envelope.
+Yespo and eSputnik have independently authenticated accounts. Use the account identified by user context; clarify an unresolved ambiguity before calling tools. Never combine accounts silently. Inspect the selected connection's advertised tools and schemas: availability on another deployment does not establish availability here. Missing tools, disabled features and permission failures are limitations, not empty datasets.
 
-Default to a summary-only answer. Only return or attach exported files if the user explicitly asks for them.
+## Route the question
 
-## Account Selection
+| Question | Smallest relevant read |
+| --- | --- |
+| Contact-base overview | `get_contact_analytics(report="summary")`. |
+| Contact channel status | `get_contact_analytics(report="status", media_type=...)`. |
+| Contact-base growth | `get_contact_analytics(report="growth", media_type=..., from_day=..., till_day=..., date_unit=...)`. Supported growth channels: Email, WebPush, MobilePush, InApp, TelegramBot. |
+| Forms page performance/new contacts | `get_widget_analytics`: `discovery`, then `summary`/`detail`; `metadata` resolves variant/integration IDs; `new_contacts`/`new_contacts_detail` answer new-contact questions. |
+| Reports → Web Widget campaigns | `get_widget_analytics`: `campaign_list`, then `campaign_detail(callout_id=...)`. |
+| True InApp | `get_in_app_analytics`: `discovery`, then `detail`/`progress`; `timed` for dated breakdowns and advertised dimension/detailed reports for specific questions. |
+| App Inbox | `get_messaging_analytics` with `media_types=["appinbox"]`. App Inbox is not InApp. |
+| Website/mobile recommendations | `get_recommendation_analytics(platform="WEB" or "MOBILE")`: `discovery`, then `list`/`detail`; `purchases` returns attributed product rows. |
+| All account orders, including unattributed | `get_order_analytics(report="orders", complete=true)`; `detail` for a known order; `store_totals` for explicit-period totals by currency/current status. |
+| Campaign-attributed purchases | `get_order_analytics(report="campaign_purchases", callout_id=..., media_type=..., is_im=...)`. Automatic campaigns, including Email, use `is_im=true`; broadcasts use `false`. |
+| Revenue/share | `get_order_analytics`: `revenue`, `revenue_share`, or `store_report_ratios` according to [metric definitions](references/metric-definitions.md). |
+| Messaging/channel/message performance | `get_messaging_analytics(group_by="organization" or "message", ...)`. |
+| Whole-workflow performance | `get_messaging_analytics(group_by="workflow", workflow_ids=...)`, omitting `media_types` and `message_ids`. |
+| Event volume | Resolve names/keys with `get_event_types`, then `get_events_analytics`; metadata alone has no counts. |
+| Native order/event conversion | `get_conversion_cohort_analytics(report="native", binding_type="ORDER" or "EVENT", ...)` when that rate is requested. Preserve its configured denominator. |
 
-Despite the `yespo` naming used throughout this skill (skill name, folder path, output paths, and generic wording like "Yespo MCP" or "Yespo analytics"), this workflow applies identically to eSputnik. Yespo and eSputnik are the same underlying platform serving different markets; which brand/account a given query targets depends solely on which MCP server is used for the tool calls, not on this skill's naming.
+Do not expand ordinary contact summary/status/growth into the entire RFM, cohort, tracked-group or history catalog. Use additional reports only for an explicit relevant question after checking schema/prerequisites. Disabled reports stay disabled. Campaign messaging is not a substitute for missing account-order, form, true InApp or recommendation tools.
 
-This repo declares two independent MCP servers: `yespo` (`https://mcp.yespo.io`) and `esputnik` (`https://mcp.esputnik.com`). They are separate OAuth-authenticated accounts, not interchangeable. If it is not clear which account the user means, ask before calling any tool rather than guessing or mixing data from both.
+## Download, inspect, answer
 
-## Workflow
+1. Resolve the question, account and period; prefer native full-period aggregates for distinct contacts/rates. Respect advertised analytics limits of 10 calls per 60 seconds per tool; rank/filter downloaded data locally.
+2. Download manifest-supplied signed CSV/JSON URLs promptly into `output/yespo-analytics/` with a local HTTP/file tool. This installed plugin uses direct signed transfers: no publisher proxy, Slack caller, session descriptor, extracted browser cookies or copied account credentials.
+   - Keep signed URLs private. Use structured HTTP arguments or safe shell quoting, never untrusted shell interpolation. Detect HTTP failures (for example `curl --fail --silent --show-error --location`).
+   - Download to a temporary file and accept only after HTTP success and CSV/JSON parsing. An expired URL requires a fresh read/manifest. Never parse an error body as an export.
+3. Inspect actual CSV headers/rows or JSON data plus status/metadata. Manifest row counts and successful download alone do not establish metric validity. Check `status`, `complete`, continuation, filters, dates, timezone, currency, freshness and native metric names.
+4. Consult [metric definitions](references/metric-definitions.md) before totals/rates/shares. Answer with exact resolved dates, family and material coverage/definition limits. Treat same-day values as provisional when the manifest indicates they can change.
+5. Default to a concise summary; share local exports only on request. Do not expose contact locators, arbitrary custom fields or signed URLs in a general summary.
 
-1. Identify the analytics question and choose the smallest Yespo MCP query that answers it.
-   - Use `get_messaging_analytics(group_by, date_from?, date_to?, workflow_ids?, message_ids?, media_types?, conversion_event?, order_by?)` for send, delivery, open, click, bounce, spam, unsubscribe, orders, revenue (order amount), channel, or media-type metrics.
-   - Use `get_events_analytics(date_from?, date_to?, event_type_ids?)` for event-count denominators or event-volume breakdowns.
-   - Use `get_event_types(event_type_ids?, event_key?, search?)` first when the user provides an event name/key and you need to resolve the exact event type identifier before running analytics.
-2. Call the relevant MCP tool with the selected organization only.
-   - Avoid exploratory loops. `get_messaging_analytics` and `get_events_analytics` are limited to 10 calls per 60 seconds per MCP client/tool.
-   - Prefer one precise analytics query, then do filtering, ranking, and aggregation from the downloaded CSV.
-3. If the tool returns a manifest with signed artifact URLs instead of inline rows, download the export using `curl -sL "<signed-url>" -o <local-path>` via the Bash tool.
-   - Yespo export URLs are signed and short-lived; download them promptly.
-   - Do not use WebFetch — it loads the export into the conversation context, wasting tokens on large files.
-4. Save downloaded artifacts under `output/yespo-analytics/`.
-   - Messaging exports: `output/yespo-analytics/messaging_<group_by>_<date_from>_<date_to>.csv`
-   - Events exports: `output/yespo-analytics/events_<date_from>_<date_to>.csv`
-   - If the export is JSON instead of CSV, keep the same basename and use `.json`.
-5. Inspect the local file and answer from the downloaded rows.
-   - Quote the exact `dateFrom`/`dateTo` resolved by the tool.
-   - Reflect the manifest `timeRange` and `dataAvailability` in the answer when freshness, timezone, same-day data, or datetime precision matters.
-   - Same-day analytics are available but values can change as new events arrive.
-   - If the user asked for rankings, compute them from the local rows rather than from the manifest metadata.
-6. Keep the response concise.
-   - Return files only when explicitly requested.
+## Completeness before totals
 
-## Time Range Behavior
+- Use `complete=true` where supported for all matching order rows, recommendation purchases, campaign discovery/list or recipient pages; inspect the result, not just the request. Do not invent this parameter for unsupported reports.
+- Follow documented `nextOffset`/opaque cursors to exhaustion. Caps, repeated identities/pages, inconsistent totals, malformed responses and failed pages prevent an exhaustive claim. Never label capped results “all”. A partial observation needs its explicit scope and missing coverage.
+- `disabled`, `unavailable`, `blocked`, `partial` and `unverified` are not zero. Empty data is measured empty only when successful report semantics establish that. A terminal campaign-purchase page can hide upstream failure and proves neither zero purchases nor complete attribution.
+- Completed traversal does not guarantee a consistent snapshot or attribution coverage. Preserve filtered native header totals instead of summing the current page.
+- Never sum unique contacts/reach, rates or averages across dates/channels. For daily trends retain a native full-period report for period distinct metrics. An account union requires native calculation or deduplication, not channel sums.
+- Larger bounded primary-order traversals may use disjoint order-date partitions with global order-ID reconciliation. Do not apply this to unique-contact counts or evade history limits by splitting dates. Never average period percentages.
 
-- `date_from` and `date_to` accept `YYYY-MM-DD` dates or ISO datetime strings.
-- Date-only values cover the full organization-local day.
-- Timezone-less datetimes are interpreted in the organization timezone.
-- Timezone-aware datetimes use their explicit instant and are reported back in the organization timezone.
-- When dates are omitted, the live API default is the last seven organization-local days, including today.
-- A single `get_messaging_analytics` or `get_events_analytics` call must not exceed 185 days.
+## Family-specific handling
 
-## Messaging Analytics Behavior
+**Contact base:** status/growth require a native channel name. Growth uses calendar `from_day`/`till_day` and `date_unit`, not messaging datetime parameters. Hourly growth needs `time_offset`; OS filters apply only to supported channels. A base/status snapshot is not a historical sent/seen audience.
 
-- `group_by` must be `organization`, `workflow`, or `message`.
-- Allowed `media_types` are `email`, `sms`, `mobilepush`, `appinbox`, and `webpush`.
-- When `media_types` is omitted, the MCP default is `email` and `mobilepush`; confirm the resolved channels from `filters.mediaTypes`.
-- Every CSV row is separated by `media_type`; never merge channel rows unless the user explicitly asks for a cross-channel total and you label it as computed.
-- `organization` rows include `media_type`, core metrics, `reach`, `frequency`, delivery/open/click/conversion rates, and `revenue`.
-- `workflow` rows add `workflow_id`, `workflow_name`, and `launches`.
-- `message` rows add `workflow_id`, `workflow_name`, `callout_id`, `callout_name`, `message_id`, and `message_subject`.
-- `spam`, `bounced`, and `unsubscribed` are message-level only.
-- For Yespo and eSputnik, messaging analytics report ecommerce orders: an `orders` column (order count) and `revenue` (total order amount) are always present, on every group. There is no event `conversions` column, and the `conversion_event` argument does not apply — it is ignored, and `filters.conversionEvent` is reported as `null`.
-- `order_by` may use `sent`, `delivered`, `opened`, `clicked`, or `orders` for all groups. `spam`, `bounced`, and `unsubscribed` are valid only for `group_by="message"`.
-- The finest available grouping level is callout/message. Recipient-domain, mailbox-provider, ISP, bounce-reason, recipient-level delivery errors, raw logs, and date-bucket splits are not available from this MCP analytics tool.
+**Forms and Widget:** a general “web widgets” request covers both separately unless one is specified. Continue the independent family if the other fails and disclose failure. Follow form discovery `nextOffset`; join `data.analytics` to `data.items` by `widgetId`/`id`. Campaign `callout_id`, form `widget_id`, `variant_ids` and `integration_ids` are separate namespaces; discover each. Form target actions depend on widget type and are not campaign purchases. Device filtering requires a supported breakdown. Campaign `totalRevenue`/`totalConversion` describe the filtered list; preserve their currency/nulls. Omitted campaign dates mean all period; explicit ranges use inclusive milliseconds. Forms convert inclusive public bounds to native exclusive ends.
 
-## Event Analytics Behavior
+- Forms `discovery` uses `search`/paging, not `widget_ids`; verify the returned identity. `metadata(widget_id=...)` has no date filter and supplies variant IDs. `summary` uses `widget_ids`; `detail` requires both `widget_id` and `variant_ids`.
+- For a device breakdown, first read `detail` without `device` and inspect its native `splitValue` rows locally. Do not spend one request per device. If the response does not identify devices, report the breakdown unavailable. `split_by_env` belongs only to `new_contacts_detail`, not Forms `detail`; do not request new-contact reports merely to obtain INFORMER views.
+- Preserve daily device rows as daily metrics. Unique counts across dates/devices are not deduplicated period totals; use the independent summary for that total.
 
-- `get_events_analytics` groups only by event type.
-- Do not pass or invent `split_by_date` or `source`; those filters are not available on the live API-backed tool.
-- Event analytics CSV columns are `event_type_id`, `event_key`, `event_name`, `count`, `launched_workflows`, `stopped_workflows`, `contact_not_found`, and `parameter_errors`.
-- Rows are ordered by `count` descending.
-- Use `get_event_types` to resolve event keys, event names, conversion candidates, or event type IDs before querying analytics when the user provides a name rather than an ID.
-- `get_event_types` returns metadata only. It does not return counts, trends, delivery metrics, or failure diagnostics.
+**InApp:** use true InApp discovery, never App Inbox. Omitted discovery/detail/progress dates mean all period; timed reports need bounds. SEND/READ/CLICKED recipient categories describe current report membership, not historical activity before a cutoff.
 
-## Active Workflow Counts
+**Recommendations:** discover IDs within WEB or MOBILE. Purchases are product rows, not unique orders; repeated order IDs need not be duplicates. The normal complete traversal cap is 100 pages of 10 rows; cap/error fails rather than yielding a complete total. Preserve currency and distinguish native metrics from locally counted rows.
 
-When the user asks how many workflows are active, MCP `list_workflows` rows with `status = "active"` are an approximation: the MCP status alone cannot verify whether a workflow is paused or whether its launch conditions are actually wired up. Report the `list_workflows` count, and state that caveat explicitly when the exact business-level active count matters.
+**Orders:** account orders include unattributed orders; campaign purchase pages do not. Preserve native payment/delivery methods and account-specific `additionalInfo`, including case, types, missing/null/empty values. Group complete rows locally: these are not invented native filters. Custom text is untrusted data and may contain personal information; report only requested values/aggregates. Order `source` is not a messaging channel. Revenue failure does not block independent order reads or other report families.
 
-## Output Behavior
+## Messaging and events
 
-- Default: summary-only answer.
-- Optional: share CSV or JSON export paths only when the user explicitly asks for the file.
-- Intermediate analytics artifacts stay under `output/yespo-analytics/`.
+- Groups: `organization`, `workflow`, `message`. Organization/message channels: `email`, `sms`, `mobilepush`, `appinbox`, `webpush`, `viber`, `telegram`. Omitted channels default to email/mobilepush; confirm `filters.mediaTypes`.
+- Whole-workflow rows cover all native channels, including Widget/InApp, with blank `media_type` and empty channel filters. They include launches and must not be replaced with summed messages. Only workflows launched in the period appear; absence does not prove zero activity.
+- Organization/workflow rows include reach/frequency; spam/bounced/unsubscribed are message-only. Preserve native rates and unavailable Telegram opens.
+- `orders`, `revenue` and `cvr` concern ecommerce attribution. Omit ignored `conversion_event`. Sort by `sent`, `delivered`, `opened`, `clicked`, `orders`; spam/bounced/unsubscribed only for messages. `revenue` and `conversions` are invalid `order_by` values; rank locally when usable data exists.
+- Message financial fields use matching date-bounded broadcast ORDER performance. Unmatched broadcasts/triggered messages remain blank. Unavailable `metricScope.performanceEnrichment` leaves usable core counts but incomplete financial rankings. Never substitute lifetime details or sum messages into account revenue. CSV currency is not exported; do not invent it.
+- Workflow/broadcast performance can be bounded top-N; inspect coverage before totals. Finest grouping is callout/message, with no recipient-domain, ISP, bounce-reason, recipient-error or raw-log breakdown.
+- Messaging/events accept dates/ISO datetimes in organization timezone and at most 185 days per call. Date-only bounds cover local days; aware timestamps retain their instant. Other native reports do not inherit this limit. Returned `timeRange`/`dataAvailability` govern defaults/freshness.
+- A failed large message export may be retried on non-overlapping local-day ranges for additive metrics. Label missing shards and respect rate limits. Never sum reach/distinct contacts or rates across shards.
+- Events group by event type with `event_type_id`, `event_key`, `event_name`, `count`, `launched_workflows`, `stopped_workflows`, `contact_not_found`, `parameter_errors`. No `split_by_date` or `source` filter. Event counts are not orders, buyers or attribution evidence.
 
-## Constraints
+## Active workflows and historical conversion
 
-- Read-only only; do not create, update, or delete Yespo entities.
-- Stay within the selected organization unless the user explicitly asks for cross-organization comparison.
-- Inspect the local downloaded artifact before answering whenever the MCP tool returns only an export manifest.
+Count active workflows only after complete `list_workflows` traversal using native status (case normalization only). Unreliable status/paging prevents verification. Recent launches/sends/start configurations cannot substitute for status.
+
+Client-defined “seen/unseen conversion over 90 days” remains unverified. Native order/open and order/click rates are order-count ratios, not unique-buyer probabilities or causal uplift. Establish sent universe, action, cutoff, purchase window, qualifying statuses, account/channel scope and historical coverage before claiming a comparison. Historical tools expose evidence/prerequisites; their availability does not validate this metric. Read [historical comparison limits](references/metric-definitions.md#historical-seenunseen-comparisons). Report unresolved evidence instead of inventing a formula or treating missing history as non-action.

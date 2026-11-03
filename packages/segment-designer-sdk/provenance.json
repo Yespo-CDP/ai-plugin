@@ -1,0 +1,178 @@
+{
+  "repository": "reteno-agent",
+  "commit": "d6dbbc3fdbe3159f7526e7613dec1253d54b6632",
+  "mcpContractCommit": "dd596c7128cb1a97e0c42118439811d9231200eb",
+  "distribution": "Complete dist runtime and declarations; source maps omitted (not runtime dependencies).",
+  "files": [
+    {
+      "path": "packages/segment-designer-sdk/dist/ajv-core.js",
+      "upstreamPath": "src/reteno_agent/packages/segment-designer-sdk/dist/ajv-core.js",
+      "sha256": "1a38f80046542402ab9bff7c113c65d3ed3fbbd8ed76281147331daff42688a7"
+    },
+    {
+      "path": "packages/segment-designer-sdk/dist/ajv2020.js",
+      "upstreamPath": "src/reteno_agent/packages/segment-designer-sdk/dist/ajv2020.js",
+      "sha256": "9eb0d832ed2062b76646275a60b866c934113b58eea644a14f2dcb0b262f7c68"
+    },
+    {
+      "path": "packages/segment-designer-sdk/dist/backendHydration.d.ts",
+      "upstreamPath": "src/reteno_agent/packages/segment-designer-sdk/dist/backendHydration.d.ts",
+      "sha256": "20e702b6864a928791a1a3367b5af493a305e06fb3b94a93c75389b03b6f2960"
+    },
+    {
+      "path": "packages/segment-designer-sdk/dist/backendHydration.js",
+      "upstreamPath": "src/reteno_agent/packages/segment-designer-sdk/dist/backendHydration.js",
+      "sha256": "1084870b10f6127042974e1a6eb205679e508243d11b9ec610faf7fc7b4bf51c"
+    },
+    {
+      "path": "packages/segment-designer-sdk/dist/businessRules.d.ts",
+      "upstreamPath": "src/reteno_agent/packages/segment-designer-sdk/dist/businessRules.d.ts",
+      "sha256": "fe62b2ab4a8cab0b552599c2e1534ea18d94df5345f1053a67a73a6a34e2802d"
+    },
+    {
+      "path": "packages/segment-designer-sdk/dist/businessRules.js",
+      "upstreamPath": "src/reteno_agent/packages/segment-designer-sdk/dist/businessRules.js",
+      "sha256": "7449090c7c59fd98d919cd5779f7f6e4ad6731b3baddf02db2bd38dff0c3be45"
+    },
+    {
+      "path": "packages/segment-designer-sdk/dist/conditionFactory.d.ts",
+      "upstreamPath": "src/reteno_agent/packages/segment-designer-sdk/dist/conditionFactory.d.ts",
+      "sha256": "291cb7dccff8045b55a8cb836b3b9d86a82d6ca2188dc0311e5daa5cf05e80a1"
+    },
+    {
+      "path": "packages/segment-designer-sdk/dist/conditionFactory.js",
+      "upstreamPath": "src/reteno_agent/packages/segment-designer-sdk/dist/conditionFactory.js",
+      "sha256": "e3c5d5172189ac4e98c0e21ab7cab025e4fc74d536cfae458dc25126304126c1"
+    },
+    {
+      "path": "packages/segment-designer-sdk/dist/definitionCatalog.d.ts",
+      "upstreamPath": "src/reteno_agent/packages/segment-designer-sdk/dist/definitionCatalog.d.ts",
+      "sha256": "c25da3643a20fa09afbf6a4eb102df5ed33b713fb3b858c8398e47a7f94b1450"
+    },
+    {
+      "path": "packages/segment-designer-sdk/dist/definitionCatalog.js",
+      "upstreamPath": "src/reteno_agent/packages/segment-designer-sdk/dist/definitionCatalog.js",
+      "sha256": "a26a1cca97fac281df402c550e1098c7e9594ce722bcb3ef1b15763221c7186a"
+    },
+    {
+      "path": "packages/segment-designer-sdk/dist/errors.d.ts",
+      "upstreamPath": "src/reteno_agent/packages/segment-designer-sdk/dist/errors.d.ts",
+      "sha256": "19c179a452d19aa4471b08f93f94a835f6e77ee0296b5bce9991c3e6ccfd53ad"
+    },
+    {
+      "path": "packages/segment-designer-sdk/dist/errors.js",
+      "upstreamPath": "src/reteno_agent/packages/segment-designer-sdk/dist/errors.js",
+      "sha256": "2df1c6e570f48b0f3f0aaa9159e4461cbb124596908571c0dec32fa39c8a1d82"
+    },
+    {
+      "path": "packages/segment-designer-sdk/dist/index.d.ts",
+      "upstreamPath": "src/reteno_agent/packages/segment-designer-sdk/dist/index.d.ts",
+      "sha256": "e6b8642ebd32f2ff7e32db0bacc02293addc030bc956c02945e6a033a1039b33"
+    },
+    {
+      "path": "packages/segment-designer-sdk/dist/index.js",
+      "upstreamPath": "src/reteno_agent/packages/segment-designer-sdk/dist/index.js",
+      "sha256": "35b128b66d41615da53ee99486d562bf63d4a6373a1d541e203a75c66ac6fc39"
+    },
+    {
+      "path": "packages/segment-designer-sdk/dist/moment-timezone-runtime.js",
+      "upstreamPath": "src/reteno_agent/packages/segment-designer-sdk/dist/moment-timezone-runtime.js",
+      "sha256": "8f0e272de4cbbe1f72c6a4c0ab54128b7d24e5e7b0c3710bea0d647007079191"
+    },
+    {
+      "path": "packages/segment-designer-sdk/dist/moment-timezone.js",
+      "upstreamPath": "src/reteno_agent/packages/segment-designer-sdk/dist/moment-timezone.js",
+      "sha256": "542d7b5f02541a72f33a7802074e7478aa8a29d50814a18a0303841d10b379c5"
+    },
+    {
+      "path": "packages/segment-designer-sdk/dist/segmentSdk.d.ts",
+      "upstreamPath": "src/reteno_agent/packages/segment-designer-sdk/dist/segmentSdk.d.ts",
+      "sha256": "ca56fc246590cb0b0ecb16c4f4282c6e720925d8dab5ae7ee59a60ceb40ec225"
+    },
+    {
+      "path": "packages/segment-designer-sdk/dist/segmentSdk.js",
+      "upstreamPath": "src/reteno_agent/packages/segment-designer-sdk/dist/segmentSdk.js",
+      "sha256": "29e8721417f419df3b022fb0c8a2f19e40b3a14735cf8d0921929536816346e1"
+    },
+    {
+      "path": "packages/segment-designer-sdk/dist/shared/chunk-AFWUOHIX.js",
+      "upstreamPath": "src/reteno_agent/packages/segment-designer-sdk/dist/shared/chunk-AFWUOHIX.js",
+      "sha256": "b91287012ec54ff495447afcd6cc7d842e10e0d82e237b8a435bfc42f02b39dd"
+    },
+    {
+      "path": "packages/segment-designer-sdk/dist/shared/chunk-NUICFKNS.js",
+      "upstreamPath": "src/reteno_agent/packages/segment-designer-sdk/dist/shared/chunk-NUICFKNS.js",
+      "sha256": "417dcc43ed2336d92932cf8b1c28d7a647cc5cf57f801c679f97b2c817b4da55"
+    },
+    {
+      "path": "packages/segment-designer-sdk/dist/shared/chunk-SAKVVKSU.js",
+      "upstreamPath": "src/reteno_agent/packages/segment-designer-sdk/dist/shared/chunk-SAKVVKSU.js",
+      "sha256": "497a67539e6798167d5eea939b176b58bab6473b96d55176fdb9a4de1c02e457"
+    },
+    {
+      "path": "packages/segment-designer-sdk/dist/timezone-data.js",
+      "upstreamPath": "src/reteno_agent/packages/segment-designer-sdk/dist/timezone-data.js",
+      "sha256": "d58ae6b18470ef999c80bbd9bb6ac2d64227f485f24ec6af75d422edee9b7326"
+    },
+    {
+      "path": "packages/segment-designer-sdk/dist/timezone-zones-0.js",
+      "upstreamPath": "src/reteno_agent/packages/segment-designer-sdk/dist/timezone-zones-0.js",
+      "sha256": "55029deda7132ce0c15a11b1f4a5345ac26bb2269223121ae2d037981b123118"
+    },
+    {
+      "path": "packages/segment-designer-sdk/dist/timezone-zones-1.js",
+      "upstreamPath": "src/reteno_agent/packages/segment-designer-sdk/dist/timezone-zones-1.js",
+      "sha256": "6a9cc263df24f44ddbf30d5681d278e8aa8120866a78b647db283cb68247e69a"
+    },
+    {
+      "path": "packages/segment-designer-sdk/dist/timezone-zones-2.js",
+      "upstreamPath": "src/reteno_agent/packages/segment-designer-sdk/dist/timezone-zones-2.js",
+      "sha256": "fea5638f9e62fdcaf416c5cb9975694cd625c9bd974ea76c9335e978c96e3f21"
+    },
+    {
+      "path": "packages/segment-designer-sdk/dist/timezone-zones-3.js",
+      "upstreamPath": "src/reteno_agent/packages/segment-designer-sdk/dist/timezone-zones-3.js",
+      "sha256": "841fc3ece95525c5cefb9cd37585a9131623d8b949ae39cc60b1d82e2cf7eb12"
+    },
+    {
+      "path": "packages/segment-designer-sdk/dist/tree.d.ts",
+      "upstreamPath": "src/reteno_agent/packages/segment-designer-sdk/dist/tree.d.ts",
+      "sha256": "0119a52128e71a9b5fe16dbd17a9bafaf20329ca74d59e724beeb28018dfb75b"
+    },
+    {
+      "path": "packages/segment-designer-sdk/dist/tree.js",
+      "upstreamPath": "src/reteno_agent/packages/segment-designer-sdk/dist/tree.js",
+      "sha256": "a5b1b243d82bbe8ddee2f1f87345fd00c2424189ad37f3d11f546f06d12bb66d"
+    },
+    {
+      "path": "packages/segment-designer-sdk/dist/types.d.ts",
+      "upstreamPath": "src/reteno_agent/packages/segment-designer-sdk/dist/types.d.ts",
+      "sha256": "3238d773a7c8d8f64fecea05c62b2361356d1ffc62121b2be034c548e638d02b"
+    },
+    {
+      "path": "packages/segment-designer-sdk/dist/types.js",
+      "upstreamPath": "src/reteno_agent/packages/segment-designer-sdk/dist/types.js",
+      "sha256": "01ae2a5b120382f9a648ced7ee8507493a134f216d100fc61600c6c9738235d2"
+    },
+    {
+      "path": "skills/segment-designer/references/schema/segment-output.schema.json",
+      "upstreamPath": "src/reteno_agent/skills/segment-designer/references/schema/segment-output.schema.json",
+      "sha256": "2a7cf1073b594999abfc93d37674629a6a9399b640898ed737aef7c56ca35d71"
+    },
+    {
+      "path": "skills/segment-designer/references/client/SDK_API_REFERENCE.md",
+      "upstreamPath": "src/reteno_agent/skills/segment-designer/references/client/SDK_API_REFERENCE.md",
+      "sha256": "fc5cf41dec48b090975ecfba9f95e779fb99b71ceb3ffa87a2edab98a701f94e"
+    },
+    {
+      "path": "skills/segment-designer/references/client/catalogs/condition-operators.md",
+      "upstreamPath": "src/reteno_agent/skills/segment-designer/references/client/catalogs/condition-operators.md",
+      "sha256": "cf6658ed2d08978ba32fa1195c3952b66badeec798f0ac5bbad903067b3bf8e3"
+    },
+    {
+      "path": "skills/segment-designer/scripts/extract_condition_operator_rows.mjs",
+      "upstreamPath": "src/reteno_agent/skills/segment-designer/scripts/extract_condition_operator_rows.mjs",
+      "sha256": "6241f08473b9e5448b0ee77e2b40d84e99f4256ac30a86f6dea54ac16640a4cd"
+    }
+  ]
+}
