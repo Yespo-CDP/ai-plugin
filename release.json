@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "version": "0.5.0-dev.9",
+  "version": "0.5.0",
   "files": {
     ".agents/plugins/marketplace.json": "50e295ea4491dfe8e3273bd7897f424d455225d32e8de51840979d1b76cf31b3",
-    ".claude-plugin/marketplace.json": "66ddf0a173aa709ca2063c27dd12eb9df555d6ea6e40fb1b9cbe6f3c5e0e83b1",
-    ".claude-plugin/plugin.json": "b146b3ef5637ca8af01f8a1fd82569aa1d5acc9e2ff40d8c36d3e30810b3c354",
-    ".codex-plugin/plugin.json": "40274c5908ac780e500612403b2c5f5503b69e38a6143c9b7653e88c47e972bf",
+    ".claude-plugin/marketplace.json": "f43d01779029effe22ef5526764a481db009362a046de536e643a113a067af1f",
+    ".claude-plugin/plugin.json": "3481ccd473c1998dff5d05a3624b6f045717278595aff74cde17fa74f6d9af66",
+    ".codex-plugin/plugin.json": "69c9b8fd467e3c7cce8029776a874fb51d7cb869e80234f197ca19ffc14b6fa1",
     ".mcp.json": "b9124fb0cd92811877e95692065c990131dd6ef82a61a57a0892a1dba38d4b7d",
-    "README.md": "6b204f52f187cb173a7b985cc252bf6767e014db33efb3ce387e916ddf8c7760",
+    "README.md": "1ff25bc0a93f6bdcaa8026dcdbbfc027a9c3a17ee961ca1771a8f58ab639ff84",
     "assets/icon.png": "8b3746ba5a2a93556a0e6e992e908db10f9551e9c2719fe6ecfb11d3792357de",
     "assets/logo.png": "8b3746ba5a2a93556a0e6e992e908db10f9551e9c2719fe6ecfb11d3792357de",
     "assets/logo.svg": "8a753e86280bf23b79e301c1244ff94793d6eb23a92dc28f45815403cc477009",

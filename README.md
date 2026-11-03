@@ -2,7 +2,7 @@
 
 Use an AI assistant to audit email deliverability, analyze performance, prepare dynamic segments, and design workflows in Yespo or eSputnik. The plugin includes four skills and two independent account connections. Choose the connection for the account you want to work with; the Yespo name on a skill does not select the account.
 
-This repository contains installable releases of the Yespo plugin. The current PR branch contains the unpublished **0.5.0-dev.9** candidate. Codex testing covers selected scenarios and does not certify every operation or account. Release approval and client acceptance are separate from package verification. Claude Code packaging is included, but its acceptance testing is deferred. Gemini support is deferred.
+This repository contains installable releases of the Yespo plugin. The current PR branch contains the unpublished **0.5.0** candidate. Codex testing covers selected scenarios and does not certify every operation or account. Release approval and client acceptance are separate from package verification. Claude Code packaging is included, but its acceptance testing is deferred. Gemini support is deferred.
 
 ## Included skills
 
@@ -33,7 +33,7 @@ For the draft candidate in [PR #5](https://github.com/Yespo-CDP/ai-plugin/pull/5
 codex plugin marketplace add Yespo-CDP/ai-plugin --ref codex/yespo-release-qa
 ```
 
-Open the desktop app's Plugins Directory, select **Yespo Plugins**, and install **Yespo** from that source. Refresh or restart the app if the source does not appear. Check that the installed version is `0.5.0-dev.9`, then start a new chat with this candidate enabled.
+Open the desktop app's Plugins Directory, select **Yespo Plugins**, and install **Yespo** from that source. Refresh or restart the app if the source does not appear. Check that the installed version is `0.5.0`, then start a new chat with this candidate enabled.
 
 Installations load a cached copy. After a candidate changes, refresh or reinstall it and check the installed version before testing. Availability varies by client; these steps follow the [official plugin packaging guidance](https://developers.openai.com/plugins/build/plugins).
 
