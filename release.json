@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "version": "0.5.0-dev.11",
+  "version": "0.5.0",
   "files": {
     ".agents/plugins/marketplace.json": "50e295ea4491dfe8e3273bd7897f424d455225d32e8de51840979d1b76cf31b3",
-    ".claude-plugin/marketplace.json": "c396b9880e3fc23fa600f114e06be477249d274ba9a7f02734564f33243e9d16",
-    ".claude-plugin/plugin.json": "ecfa80745d2c69a862c28149affe273592fb37cf588b36d55e5bdd0bc898e757",
-    ".codex-plugin/plugin.json": "429cf4195d6c25f9bd60da11b9ba3d5405f29bd5fdaef805afb477616621b5bc",
+    ".claude-plugin/marketplace.json": "f43d01779029effe22ef5526764a481db009362a046de536e643a113a067af1f",
+    ".claude-plugin/plugin.json": "3481ccd473c1998dff5d05a3624b6f045717278595aff74cde17fa74f6d9af66",
+    ".codex-plugin/plugin.json": "60cc63203d847e6c366a991470929dff4201da473aa84cb1f786385a697a0454",
     ".mcp.json": "b9124fb0cd92811877e95692065c990131dd6ef82a61a57a0892a1dba38d4b7d",
-    "README.md": "2c0e310b148458b75e659f07340f3463a319bc2029e58f6b0539b6d59aae40e4",
+    "README.md": "1ff25bc0a93f6bdcaa8026dcdbbfc027a9c3a17ee961ca1771a8f58ab639ff84",
     "assets/icon.png": "8b3746ba5a2a93556a0e6e992e908db10f9551e9c2719fe6ecfb11d3792357de",
     "assets/logo.png": "8b3746ba5a2a93556a0e6e992e908db10f9551e9c2719fe6ecfb11d3792357de",
     "assets/logo.svg": "8a753e86280bf23b79e301c1244ff94793d6eb23a92dc28f45815403cc477009",

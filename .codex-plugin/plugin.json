@@ -1,6 +1,6 @@
 {
   "name": "yespo",
-  "version": "0.5.0-dev.11",
+  "version": "0.5.0",
   "description": "Yespo and eSputnik workflows, dynamic segments, analytics and email deliverability audits",
   "author": {
     "name": "Yespo",
