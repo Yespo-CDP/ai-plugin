@@ -55,6 +55,8 @@ class RealDnsResolver:
         normalized_type = record_type.upper()
         try:
             answers = self._resolver.resolve(normalized_name, normalized_type)
+        except (self._dns_resolver_module.NXDOMAIN, self._dns_resolver_module.NoAnswer):
+            return LookupResult(records=[])
         except Exception as exc:  # dnspython exception types vary by lookup path.
             return LookupResult(records=[], error=f"{type(exc).__name__}: {exc}")
 
@@ -87,11 +89,13 @@ def check_https_tls(hostname: str, *, timeout: float = 5.0) -> dict[str, Any]:
         with socket.create_connection((normalized, 443), timeout=timeout) as sock:
             with context.wrap_socket(sock, server_hostname=normalized) as wrapped:
                 cert = wrapped.getpeercert()
-    except Exception as exc:
+    except ssl.SSLCertVerificationError as exc:
         return {
             "status": CHECK_FAIL,
             "error": f"{type(exc).__name__}: {exc}",
         }
+    except Exception as exc:
+        return {"status": CHECK_SKIPPED, "error": f"{type(exc).__name__}: {exc}"}
 
     not_after = cert.get("notAfter") if isinstance(cert, dict) else None
     return {
@@ -208,6 +212,7 @@ def check_spf(domain: str, resolver: DnsResolver) -> dict[str, Any]:
     details: dict[str, Any] = {"records": spf_records}
     if lookup.error:
         details["dnsError"] = lookup.error
+        return _inconclusive_check("spf", "SPF record", domain, details)
     if not spf_records:
         return _check(
             "spf",
@@ -260,6 +265,7 @@ def check_dmarc(domain: str, resolver: DnsResolver) -> dict[str, Any]:
     details: dict[str, Any] = {"name": name, "records": records}
     if lookup.error:
         details["dnsError"] = lookup.error
+        return _inconclusive_check("dmarc", "DMARC record", domain, details)
     if not records:
         return _check("dmarc", "DMARC record", CHECK_FAIL, domain, "No DMARC TXT record was found.", details=details)
     if len(records) > 1:
@@ -270,6 +276,10 @@ def check_dmarc(domain: str, resolver: DnsResolver) -> dict[str, Any]:
     details["tags"] = tags
     if policy not in {"none", "quarantine", "reject"}:
         return _check("dmarc.policy", "DMARC policy", CHECK_FAIL, domain, "DMARC policy is missing or invalid.", details=details)
+    percentage = tags.get("pct", "100")
+    if not re.fullmatch(r"[0-9]{1,3}", percentage) or int(percentage) > 100:
+        return _check("dmarc.policy", "DMARC policy", CHECK_WARN, domain, "DMARC enforcement percentage is invalid.", details=details)
+    details["percentage"] = int(percentage)
     if policy == "none":
         return _check(
             "dmarc.policy",
@@ -280,6 +290,9 @@ def check_dmarc(domain: str, resolver: DnsResolver) -> dict[str, Any]:
             details=details,
             recommendation="Move toward quarantine or reject after validating alignment and reports.",
         )
+    if int(percentage) < 100:
+        return _check("dmarc.policy", "DMARC policy", CHECK_WARN, domain,
+                      f"DMARC requests p={policy} for only {percentage}% of messages.", details=details)
     return _check("dmarc", "DMARC record", CHECK_PASS, domain, f"DMARC policy is p={policy}.", details=details)
 
 
@@ -295,22 +308,32 @@ def check_dkim(domain: str, domain_payload: dict[str, Any], resolver: DnsResolve
         )
 
     details: dict[str, Any] = {"recordNames": record_names, "lookups": {}}
-    missing: list[str] = []
+    invalid: list[str] = []
+    inconclusive: list[str] = []
     for name in record_names:
+        # Resolver.resolve(TXT) follows CNAMEs and returns the terminal TXT RRset.
+        # An alias alone is not evidence of a published DKIM key.
         txt_lookup = _lookup(resolver, name, "TXT")
-        cname_lookup = _lookup(resolver, name, "CNAME")
         details["lookups"][name] = {
             "txt": txt_lookup.records,
             "txtError": txt_lookup.error,
-            "cname": cname_lookup.records,
-            "cnameError": cname_lookup.error,
         }
-        if not txt_lookup.records and not cname_lookup.records:
-            missing.append(name)
-    if missing:
-        details["missing"] = missing
-        return _check("dkim", "DKIM record", CHECK_FAIL, domain, "One or more DKIM records were not found.", details=details)
-    return _check("dkim", "DKIM record", CHECK_PASS, domain, "DKIM selector records were found.", details=details)
+        if txt_lookup.error:
+            inconclusive.append(name)
+            continue
+        tags = _parse_tag_record(txt_lookup.records[0]) if len(txt_lookup.records) == 1 else {}
+        if tags.get("v", "DKIM1") != "DKIM1" or not tags.get("p", "").strip():
+            invalid.append(name)
+    if inconclusive:
+        details.update(inconclusive=True, unresolvedRecordNames=inconclusive)
+    if invalid:
+        details["invalidOrMissing"] = invalid
+        unresolved = f" Unresolved selectors: {', '.join(inconclusive)}." if inconclusive else ""
+        return _check("dkim", "DKIM record", CHECK_FAIL, domain,
+                      "One or more DKIM records are missing, malformed, or have an empty (revoked) public key." + unresolved, details=details)
+    if inconclusive:
+        return _inconclusive_check("dkim", "DKIM record", domain, details)
+    return _check("dkim", "DKIM record", CHECK_PASS, domain, "DKIM selector records contain nonempty public keys.", details=details)
 
 
 def check_mx(domain: str, resolver: DnsResolver) -> dict[str, Any]:
@@ -318,6 +341,7 @@ def check_mx(domain: str, resolver: DnsResolver) -> dict[str, Any]:
     details: dict[str, Any] = {"records": lookup.records}
     if lookup.error:
         details["dnsError"] = lookup.error
+        return _inconclusive_check("mx", "MX records", domain, details)
     if not lookup.records:
         return _check("mx", "MX records", CHECK_WARN, domain, "No MX records were found for this sender/reply domain.", details=details)
     return _check("mx", "MX records", CHECK_PASS, domain, "MX records were found.", details=details)
@@ -337,29 +361,35 @@ def check_host_resolution(hostname: str, resolver: DnsResolver, *, purpose: str)
             "aaaa": aaaa_lookup.error,
         },
     }
-    if cname_lookup.records or a_lookup.records or aaaa_lookup.records:
+    if a_lookup.records or aaaa_lookup.records:
         return _check(purpose, "Host resolution", CHECK_PASS, hostname, "Host resolves publicly.", details=details)
+    if any(details["errors"].values()):
+        return _inconclusive_check(purpose, "Host resolution", hostname, details)
+    if cname_lookup.records:
+        return _check(purpose, "Host resolution", CHECK_PASS, hostname, "Host has a public CNAME record.", details=details)
     return _check(purpose, "Host resolution", CHECK_FAIL, hostname, "Host does not resolve publicly.", details=details)
 
 
 def check_short_link_tls(hostname: str, tls_checker: HttpsTlsChecker) -> dict[str, Any]:
     result = tls_checker(hostname)
-    status = result.get("status") if isinstance(result, dict) else CHECK_FAIL
+    status = result.get("status") if isinstance(result, dict) else None
     if status == CHECK_PASS:
         return _check("short_link.tls", "Short-link HTTPS/TLS", CHECK_PASS, hostname, "HTTPS certificate is valid.", details=result)
-    return _check("short_link.tls", "Short-link HTTPS/TLS", CHECK_FAIL, hostname, "HTTPS/TLS check failed.", details=result)
+    if status == CHECK_FAIL:
+        return _check("short_link.tls", "Short-link HTTPS/TLS", CHECK_FAIL, hostname, "HTTPS/TLS certificate validation failed.", details=result)
+    return _inconclusive_check("short_link.tls", "Short-link HTTPS/TLS", hostname, _as_dict(result))
 
 
 def check_bimi(domain: str, resolver: DnsResolver) -> dict[str, Any]:
-    return _optional_txt_check("bimi", "BIMI record", f"default._bimi.{domain}", resolver)
+    return _optional_txt_check("bimi", "BIMI record", f"default._bimi.{domain}", resolver, "BIMI1")
 
 
 def check_mta_sts(domain: str, resolver: DnsResolver) -> dict[str, Any]:
-    return _optional_txt_check("mta_sts", "MTA-STS record", f"_mta-sts.{domain}", resolver)
+    return _optional_txt_check("mta_sts", "MTA-STS record", f"_mta-sts.{domain}", resolver, "STSv1")
 
 
 def check_tls_rpt(domain: str, resolver: DnsResolver) -> dict[str, Any]:
-    return _optional_txt_check("tls_rpt", "TLS-RPT record", f"_smtp._tls.{domain}", resolver)
+    return _optional_txt_check("tls_rpt", "TLS-RPT record", f"_smtp._tls.{domain}", resolver, "TLSRPTv1")
 
 
 def check_sender_setup(sender_payload: dict[str, Any], verified_domains: list[str]) -> list[dict[str, Any]]:
@@ -412,7 +442,7 @@ def check_sender_setup(sender_payload: dict[str, Any], verified_domains: list[st
             _check("sender.configured_domains", "Configured sender domains", CHECK_SKIPPED, "sender", "No configured sender domain list was provided.")
         )
 
-    interfaces = _as_list(public_interface) if not isinstance(public_interface, dict) else [public_interface]
+    interfaces = _as_list(public_interface.get("items")) if isinstance(public_interface, dict) and "items" in public_interface else _as_list(public_interface)
     unavailable = [
         {"email": item.get("email"), "status": item.get("status"), "statusReason": item.get("statusReason")}
         for item in interfaces
@@ -429,6 +459,8 @@ def check_sender_setup(sender_payload: dict[str, Any], verified_domains: list[st
                 details={"unavailable": unavailable},
             )
         )
+    elif any(not isinstance(item, dict) or item.get("status") != "AVAILABLE" for item in interfaces):
+        checks.append(_check("sender.public_interface", "Sender interfaces", CHECK_WARN, "sender", "Some sender interface statuses are missing or unreadable."))
     elif interfaces:
         checks.append(_check("sender.public_interface", "Sender interfaces", CHECK_PASS, "sender", "Sender interfaces are available."))
     else:
@@ -524,6 +556,12 @@ def render_markdown(report: dict[str, Any]) -> str:
     else:
         lines.extend(["## Priority Findings", "", "- No failing or warning checks found.", ""])
 
+    inconclusive = [check for check in report["checks"] if check.get("details", {}).get("inconclusive")]
+    if inconclusive:
+        lines.extend(["## Inconclusive Checks", ""])
+        lines.extend(f"- `{check['subject']}` {check['message']}" for check in inconclusive)
+        lines.append("")
+
     lines.extend(["## Domains", ""])
     for domain in report["domains"]:
         statuses = _summarize_checks(domain["checks"])
@@ -554,11 +592,11 @@ def write_artifacts(report: dict[str, Any], *, output_dir: Path) -> tuple[Path, 
 
 def _check_domain_configuration(domain_payload: dict[str, Any]) -> dict[str, Any]:
     domain = _normalize_domain(domain_payload.get("domain"))
-    configuration = _as_dict(domain_payload.get("configuration"))
+    configuration = _as_dict(domain_payload.get("status")) or _as_dict(domain_payload.get("configuration"))
     if not configuration:
         return _check("mcp.domain_configuration", "Domain configuration", CHECK_SKIPPED, domain, "No domain configuration was provided by MCP.")
-    status = _find_first_key(configuration, {"status"})
-    verification_passed = _find_first_key(configuration, {"verificationPassed", "verified"})
+    status = configuration.get("status")
+    verification_passed = configuration.get("verificationPassed", configuration.get("verified"))
     details = {"status": status, "verificationPassed": verification_passed, "configuration": configuration}
     if status in {"CONFIGURED", "VERIFIED"} or verification_passed is True:
         return _check("mcp.domain_configuration", "Domain configuration", CHECK_PASS, domain, "Yespo domain configuration is verified/configured.", details=details)
@@ -599,14 +637,17 @@ def _check_warmup_info(domain_payload: dict[str, Any]) -> dict[str, Any]:
     return _check("mcp.warmup_info", "Warmup info", CHECK_INFO, domain, "Warmup info was returned by MCP.", details={"warmupInfo": warmup})
 
 
-def _optional_txt_check(check_id: str, title: str, name: str, resolver: DnsResolver) -> dict[str, Any]:
+def _optional_txt_check(check_id: str, title: str, name: str, resolver: DnsResolver, version: str) -> dict[str, Any]:
     lookup = _lookup(resolver, name, "TXT")
     details: dict[str, Any] = {"name": name, "records": lookup.records}
     if lookup.error:
         details["dnsError"] = lookup.error
+        return _inconclusive_check(check_id, title, name, details)
     domain = name.split(".", 1)[1] if "." in name else name
+    if any(_parse_tag_record(record).get("v") == version for record in lookup.records):
+        return _check(check_id, title, CHECK_INFO, domain, f"{title} with the expected version tag was found; full policy validity was not checked.", details=details)
     if lookup.records:
-        return _check(check_id, title, CHECK_INFO, domain, f"{title} was found.", details=details)
+        return _check(check_id, title, CHECK_WARN, domain, f"TXT records were found, but none identify a {title} with v={version}.", details=details)
     return _check(check_id, title, CHECK_SKIPPED, domain, f"{title} was not found.", details=details)
 
 
@@ -753,6 +794,12 @@ def _check(
     return payload
 
 
+def _inconclusive_check(check_id: str, title: str, subject: str, details: dict[str, Any]) -> dict[str, Any]:
+    return _check(check_id, title, CHECK_SKIPPED, subject,
+                  f"{title} could not be verified because the network check was inconclusive.",
+                  details={**details, "inconclusive": True})
+
+
 def _summarize_checks(checks: list[dict[str, Any]]) -> dict[str, Any]:
     counts = {
         CHECK_PASS: 0,
@@ -767,7 +814,7 @@ def _summarize_checks(checks: list[dict[str, Any]]) -> dict[str, Any]:
             counts[status] += 1
     if counts[CHECK_FAIL]:
         overall = "fail"
-    elif counts[CHECK_WARN]:
+    elif counts[CHECK_WARN] or any(check.get("details", {}).get("inconclusive") for check in checks):
         overall = "warn"
     else:
         overall = "pass"

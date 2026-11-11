@@ -1,7 +1,7 @@
 {
   "name": "yespo",
-  "version": "0.3.0",
-  "description": "Yespo's AI agent. Less clicking, more doing.",
+  "version": "0.5.0",
+  "description": "Yespo and eSputnik workflows, dynamic segments, analytics and email deliverability audits",
   "author": {
     "name": "Yespo",
     "email": "dev@yespo.io",
@@ -10,24 +10,34 @@
   "homepage": "https://github.com/Yespo-CDP/ai-plugin",
   "repository": "https://github.com/Yespo-CDP/ai-plugin",
   "license": "UNLICENSED",
-  "keywords": ["yespo", "esputnik", "email", "marketing", "mcp"],
+  "keywords": [
+    "yespo",
+    "esputnik",
+    "email",
+    "marketing",
+    "mcp",
+    "segments",
+    "workflows"
+  ],
   "skills": "./skills/",
   "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Yespo",
     "shortDescription": "Yespo's AI agent. Less clicking, more doing.",
-    "longDescription": "Meet the Yespo Agent: the teammate who never gets tired, never says \"I'll circle back,\" and is suspiciously enthusiastic about doing the boring stuff for you. It helps your team work with Yespo or eSputnik in Codex or Cowork, answer questions, dig things up, and keep workflows moving without turning every task into a small corporate tragedy. Despite the Yespo name, it works identically for eSputnik accounts too — connect either the yespo or esputnik MCP server (or both) depending on which account you use. Think of it as an extra pair of hands, except faster, calmer, and much better at remembering where things are.",
+    "longDescription": "Work with Yespo or eSputnik through the selected account connection: workflow design, dynamic segments, analytics and email deliverability audits. This candidate includes exactly four skills. Each action requires live tool availability and account authorization; release acceptance remains incomplete. Email creation and editing skills are excluded. The shared MCP tools are unchanged.",
     "developerName": "Yespo",
     "category": "Marketing",
-    "capabilities": ["Read", "Write"],
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
     "websiteURL": "https://yespo.io/",
     "privacyPolicyURL": "https://yespo.io/privacy-policy",
     "termsOfServiceURL": "https://yespo.io/terms-of-use",
     "defaultPrompt": [
-      "Use Yespo to read or update an existing Yespo email message by ID.",
-      "Use eSputnik to read or update an existing eSputnik email message by ID.",
-      "Use Yespo to audit my organization's email deliverability technical setup.",
-      "Use Yespo to summarize messaging performance for the last 7 days."
+      "Use Yespo to summarize messaging performance and audit email deliverability.",
+      "Use eSputnik to count an audience without saving a segment.",
+      "Use Yespo to create an inactive workflow from my requirements."
     ],
     "brandColor": "#0B266B",
     "composerIcon": "./assets/icon.png",

@@ -6,16 +6,25 @@
   },
   "metadata": {
     "description": "Yespo skills and tools for Claude Code",
-    "version": "0.3.0"
+    "version": "0.5.0"
   },
   "plugins": [
     {
       "name": "yespo",
       "source": "./",
-      "description": "Yespo and eSputnik email editor, deliverability audits, messaging analytics, and MCP integration",
-      "version": "0.3.0",
+      "description": "Yespo and eSputnik workflows, dynamic segments, analytics and email deliverability audits",
+      "version": "0.5.0",
       "category": "marketing",
-      "tags": ["yespo", "esputnik", "email", "marketing", "deliverability", "analytics"]
+      "tags": [
+        "yespo",
+        "esputnik",
+        "email",
+        "marketing",
+        "deliverability",
+        "analytics",
+        "segments",
+        "workflows"
+      ]
     }
   ]
 }
