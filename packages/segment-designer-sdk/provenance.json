@@ -1,6 +1,6 @@
 {
   "repository": "reteno-agent",
-  "commit": "d6dbbc3fdbe3159f7526e7613dec1253d54b6632",
+  "commit": "8700ca8698f86a501dfe07a94aa157724ff8c0c2",
   "mcpContractCommit": "dd596c7128cb1a97e0c42118439811d9231200eb",
   "distribution": "Complete dist runtime and declarations; source maps omitted (not runtime dependencies).",
   "files": [
@@ -52,7 +52,7 @@
     {
       "path": "packages/segment-designer-sdk/dist/definitionCatalog.js",
       "upstreamPath": "src/reteno_agent/packages/segment-designer-sdk/dist/definitionCatalog.js",
-      "sha256": "a26a1cca97fac281df402c550e1098c7e9594ce722bcb3ef1b15763221c7186a"
+      "sha256": "5ace77ea2ebec484954bf016f1f7920e8819f8e2cd9c27b9753730133c506da1"
     },
     {
       "path": "packages/segment-designer-sdk/dist/errors.d.ts",
@@ -72,7 +72,7 @@
     {
       "path": "packages/segment-designer-sdk/dist/index.js",
       "upstreamPath": "src/reteno_agent/packages/segment-designer-sdk/dist/index.js",
-      "sha256": "35b128b66d41615da53ee99486d562bf63d4a6373a1d541e203a75c66ac6fc39"
+      "sha256": "cd4d6599f865dedc96ae95a664e307f907771721187874d9c89c1d9ac36e95d1"
     },
     {
       "path": "packages/segment-designer-sdk/dist/moment-timezone-runtime.js",
@@ -162,7 +162,7 @@
     {
       "path": "skills/segment-designer/references/client/SDK_API_REFERENCE.md",
       "upstreamPath": "src/reteno_agent/skills/segment-designer/references/client/SDK_API_REFERENCE.md",
-      "sha256": "fc5cf41dec48b090975ecfba9f95e779fb99b71ceb3ffa87a2edab98a701f94e"
+      "sha256": "5f4ee4f660bba839e0dcfa11773fdda55a26ca916a9871640d6e30f7fbab39ce"
     },
     {
       "path": "skills/segment-designer/references/client/catalogs/condition-operators.md",

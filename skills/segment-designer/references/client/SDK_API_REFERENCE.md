@@ -370,8 +370,9 @@ type AggregateSelection =
 - Pass user intent rather than a stored representation. Do not manually trim, serialize ranges, convert time zones, remove an SMS `+`, generate time labels, or lower select options to storage values.
 - Use exact static option values returned by compact definitions.
 - Standard ranges contain two ordered non-negative values. Date/date-time input must use the formats documented above.
-- For request-backed autocomplete values absent from static definitions, resolve both the exact value and display label through an available segment-specific lookup. If either cannot be resolved, stop rather than substitute a nearby value.
-- For ordinary single autocomplete values, pass the resolved display string as `label` when the definition cannot derive it.
+- For scalar `EVENT_PARAMS.*` and `SC_EVENT_PARAMS.*` request-backed autocomplete values, pass the exact resolved literal and omit `label`; the SDK mirrors the frontend's default scalar mapper and derives `label = value`.
+- For other request-backed autocomplete values absent from static definitions, resolve both the exact value and display label through an available segment-specific lookup. If either cannot be resolved, stop rather than substitute a nearby value.
+- For other ordinary single autocomplete values, pass the resolved display string as `label` when the definition cannot derive it.
 - `GROUP` and activity-message autocomplete labels must be a JSON-stringified array of matching `{value, label}` objects, for example `label: JSON.stringify([{value: 42, label: "VIP"}])`.
 - Do not invent labels for customer-data criteria; the SDK derives their source label.
 

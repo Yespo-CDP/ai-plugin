@@ -482,6 +482,10 @@ function usesMultiInput(definition, operator) {
 function optionLabel(option) {
   return String(option.label ?? option.description ?? option.name ?? option.value ?? option.id ?? option.profileInputOptionId ?? "");
 }
+function usesDefaultScalarAutocompleteMapper(definition) {
+  const columnId = definition.columnId;
+  return typeof columnId === "string" && (columnId.startsWith("EVENT_PARAMS.") || columnId.startsWith("SC_EVENT_PARAMS."));
+}
 var DefinitionCatalog = class {
   definitions;
   context;
@@ -697,6 +701,10 @@ var DefinitionCatalog = class {
     if (matched.every((item) => item !== void 0)) {
       const selections = matched.map((item, index) => ({ value: values[index], label: optionLabel(item) }));
       return definition.columnId === "GROUP" || ACTIVITY_MESSAGE_COLUMNS.has(definition.columnId ?? "") ? JSON.stringify(selections) : multiple ? JSON.stringify(selections) : selections[0].label;
+    }
+    if (usesDefaultScalarAutocompleteMapper(definition)) {
+      const selections = values.map((item) => ({ value: item, label: String(item) }));
+      return multiple ? JSON.stringify(selections) : selections[0].label;
     }
     if (definition.requestURL != null || definition.operators.some((item) => item.requestURL != null)) {
       throw new SegmentSdkError(`Autocomplete definition ${definition.columnId ?? definition.profileInputMetadata?.profileInputId} requires an explicit label.`);

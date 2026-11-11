@@ -6,14 +6,14 @@
   },
   "metadata": {
     "description": "Yespo skills and tools for Claude Code",
-    "version": "0.5.0"
+    "version": "0.5.0-dev.10"
   },
   "plugins": [
     {
       "name": "yespo",
       "source": "./",
       "description": "Yespo and eSputnik workflows, dynamic segments, analytics and email deliverability audits",
-      "version": "0.5.0",
+      "version": "0.5.0-dev.10",
       "category": "marketing",
       "tags": [
         "yespo",
